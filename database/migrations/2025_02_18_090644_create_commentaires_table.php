@@ -21,9 +21,6 @@ return new class extends Migration
 
             $table->foreign('temoignage_id')->references('id')->on('temoignages')->onDelete('cascade');
             $table->foreign('recette_id')->references('id')->on('recettes')->onDelete('cascade');
-
-            // cette contrainte CHECK pour assurer qu'un commentaire est associe soit a un temoignage, soit a une recette
-            $table->check('(temoignage_id IS NOT NULL AND recette_id IS NULL) OR (temoignage_id IS NULL AND recette_id IS NOT NULL)');
         });
     }
 
