@@ -16,8 +16,8 @@ return new class extends Migration
             $table->string('nom');
             $table->text('contenu');
             $table->timestamps();
-            $table->unsignedBigInteger('temoignage_id')->nullable(false); // not null
-            $table->unsignedBigInteger('recette_id')->nullable(false); // not null
+            $table->unsignedBigInteger('temoignage_id')->nullable();
+            $table->unsignedBigInteger('recette_id')->nullable(); 
 
             $table->foreign('temoignage_id')->references('id')->on('temoignages')->onDelete('cascade');
             $table->foreign('recette_id')->references('id')->on('recettes')->onDelete('cascade');

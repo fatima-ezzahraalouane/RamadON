@@ -1,5 +1,8 @@
 <?php
-
+use App\Http\Controllers\CategorieController;
+use App\Http\Controllers\TemoignageController;
+use App\Http\Controllers\RecetteController;
+use App\Http\Controllers\CommentaireController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,5 +17,19 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('pages.home');
 });
+
+Route::get('/categories', [CategorieController::class, 'index']);
+
+Route::get('/temoignages', [TemoignageController::class, 'index']);
+Route::post('/temoignages', [TemoignageController::class, 'store']);
+
+Route::get('/recettes', [RecetteController::class, 'index']);
+// Route::post('/recettes', [RecetteController::class, 'store']);
+
+
+Route::get('/recettes', [RecetteController::class, 'index'])->name('recettes.index');
+Route::get('/recettes/{id}', [RecetteController::class, 'show'])->name('recettes.show');
+
+Route::post('/commentaires', [CommentaireController::class, 'store']);

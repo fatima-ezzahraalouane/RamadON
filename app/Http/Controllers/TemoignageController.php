@@ -8,9 +8,15 @@ use Illuminate\Http\Request;
 class TemoignageController extends Controller
 {
     //
+    // public function index() {
+    //     return response()->json(Temoignage::all());
+    // }
+
     public function index() {
-        return response()->json(Temoignage::all());
+        $temoignages = Temoignage::all();
+        return view('pages.temoignages', compact('temoignages'));
     }
+    
 
     public function store(Request $request) {
         $request->validate([
