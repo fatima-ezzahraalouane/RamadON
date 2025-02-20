@@ -1,0 +1,1132 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ramadan 2025 - Partagez vos expériences</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#8B5CF6',
+                        secondary: '#F59E0B'
+                    },
+                    borderRadius: {
+                        'none': '0px',
+                        'sm': '4px',
+                        DEFAULT: '8px',
+                        'md': '12px',
+                        'lg': '16px',
+                        'xl': '20px',
+                        '2xl': '24px',
+                        '3xl': '32px',
+                        'full': '9999px',
+                        'button': '8px'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        :where([class^="ri-"])::before {
+            content: "\f3c2";
+        }
+
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 4px;
+        }
+
+        .hover-scale {
+            transition: transform 0.2s ease-in-out;
+        }
+
+        .hover-scale:hover {
+            transform: scale(1.02);
+        }
+
+        .hover-shadow {
+            transition: box-shadow 0.2s ease-in-out;
+        }
+
+        .hover-shadow:hover {
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        .text-gradient {
+            background: linear-gradient(to right, #8B5CF6, #6366F1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const navLinks = document.querySelectorAll('nav a[href^="#"]');
+            navLinks.forEach(link => {
+                link.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    const targetSection = document.querySelector(targetId);
+                    if (targetSection) {
+                        targetSection.scrollIntoView({
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+</head>
+
+<body class="bg-gray-50">
+    <nav class="fixed top-0 left-0 right-0 bg-white shadow-sm z-50">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <span class="text-2xl font-['Pacifico'] text-primary">logo</span>
+                    <div class="hidden md:flex ml-10 space-x-8">
+                        <a href="#hero"
+                            class="text-gray-900 hover:text-primary px-3 py-2 text-sm font-medium">Accueil</a>
+                        <a href="#experiences"
+                            class="text-gray-900 hover:text-primary px-3 py-2 text-sm font-medium">Expériences</a>
+                        <a href="#recipes"
+                            class="text-gray-900 hover:text-primary px-3 py-2 text-sm font-medium">Recettes</a>
+                        <a href="#stats"
+                            class="text-gray-900 hover:text-primary px-3 py-2 text-sm font-medium">Statistiques</a>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <div class="relative">
+                        <input type="text" placeholder="Rechercher..."
+                            class="w-64 pl-10 pr-4 py-2 text-sm border rounded-full focus:outline-none focus:border-primary">
+                        <div class="absolute left-3 top-2 w-5 h-5 flex items-center justify-center">
+                            <i class="ri-search-line text-gray-400"></i>
+                        </div>
+                    </div>
+                    <button
+                        class="!rounded-button bg-primary text-white px-4 py-2 text-sm font-medium hover:bg-opacity-90 whitespace-nowrap">
+                        Se connecter
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <main class="pt-16">
+        <section id="hero" class="relative bg-gradient-to-r from-primary to-purple-800 text-white py-20">
+            <div class="max-w-7xl mx-auto px-4 flex items-center">
+                <div class="w-1/2 pr-12">
+                    <h1 class="text-5xl font-bold mb-6">Ramadan 2025</h1>
+                    <p class="text-xl mb-8 text-black font-medium">Partagez vos expériences, recettes et moments
+                        spirituels avec notre communauté pendant ce mois sacré.</p>
+                    <button onclick="showExperienceForm()"
+                        class="!rounded-button bg-white text-primary px-6 py-3 font-medium hover:bg-gray-100 whitespace-nowrap transform transition-all duration-200 hover:-translate-y-1 hover:shadow-lg">
+                        Partager votre expérience
+                    </button>
+                    <div id="experienceFormModal"
+                        class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center">
+                        <div class="bg-white rounded-lg p-6 max-w-lg w-full mx-4 max-h-[90vh] overflow-y-auto">
+                            <div class="flex justify-between items-center mb-6">
+                                <h3 class="text-2xl font-bold text-gray-900">Partagez votre expérience</h3>
+                                <button onclick="hideExperienceForm()" class="text-gray-500 hover:text-gray-700">
+                                    <i class="ri-close-line text-2xl"></i>
+                                </button>
+                            </div>
+                            <form id="experienceForm" class="space-y-6">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Votre nom</label>
+                                    <input type="text" required
+                                        class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-primary"
+                                        placeholder="Entrez votre nom">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Titre</label>
+                                    <input type="text" required
+                                        class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-primary"
+                                        placeholder="Donnez un titre à votre expérience">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Description</label>
+                                    <textarea required
+                                        class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-primary h-32"
+                                        placeholder="Partagez votre expérience..."></textarea>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">URL de la photo</label>
+                                    <input type="url" required
+                                        class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-primary"
+                                        placeholder="Entrez l'URL de votre image">
+                                </div>
+                                <div class="flex justify-end space-x-4">
+                                    <button type="button" onclick="hideExperienceForm()"
+                                        class="!rounded-button px-6 py-2 border border-gray-300 text-gray-700 hover:bg-gray-50 whitespace-nowrap">
+                                        Annuler
+                                    </button>
+                                    <button type="submit"
+                                        class="!rounded-button bg-primary text-white px-6 py-2 hover:bg-opacity-90 whitespace-nowrap">
+                                        Publier
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div
+                        class="comments-section hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center">
+                        <div class="bg-white rounded-lg p-6 max-w-lg w-full mx-4 max-h-[90vh] overflow-y-auto">
+                            <div class="flex justify-between items-center mb-6">
+                                <h3 class="text-2xl font-bold text-gray-900">Commentaires</h3>
+                                <button onclick="hideComments(this)" class="text-gray-500 hover:text-gray-700">
+                                    <i class="ri-close-line text-2xl"></i>
+                                </button>
+                            </div>
+                            <div class="space-y-4 mb-6">
+                                <div class="flex items-start space-x-4">
+                                    <img src="https://public.readdy.ai/ai/img_res/7981d1aa5d3fb0443327a7dbfa075c17.jpg"
+                                        class="w-10 h-10 rounded-full" alt="User">
+                                    <div>
+                                        <div class="flex items-center">
+                                            <span class="font-medium">Marie Dubois</span>
+                                            <span class="text-gray-500 text-sm ml-2">Il y a 2 jours</span>
+                                        </div>
+                                        <p class="text-gray-600 mt-1">Merci pour ce partage ! C'est vraiment inspirant.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <form class="space-y-4" onsubmit="addComment(event, this)">
+                                <div>
+                                    <input type="text" placeholder="Votre nom"
+                                        class="w-full px-3 py-2 text-sm border rounded-lg focus:ring-2 focus:ring-primary focus:border-primary">
+                                </div>
+                                <div>
+                                    <textarea placeholder="Votre commentaire"
+                                        class="w-full px-3 py-2 text-sm border rounded-lg focus:ring-2 focus:ring-primary focus:border-primary h-20"></textarea>
+                                </div>
+                                <div class="flex justify-end space-x-4">
+                                    <button type="button" onclick="hideComments(this)"
+                                        class="!rounded-button px-6 py-2 border border-gray-300 text-gray-700 hover:bg-gray-50 whitespace-nowrap">
+                                        Annuler
+                                    </button>
+                                    <button type="submit"
+                                        class="!rounded-button bg-primary text-white px-4 py-2 hover:bg-opacity-90 whitespace-nowrap">
+                                        Publier le commentaire
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div
+                        class="recipe-details hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center">
+                        <div class="bg-white rounded-lg p-6 max-w-xl w-full mx-4 max-h-[80vh] overflow-y-auto">
+                            <div class="flex justify-between items-start mb-6">
+                                <div>
+                                    <h3 class="text-2xl font-bold mb-2">Harira Traditionnelle</h3>
+                                    <div class="flex items-center space-x-4 text-sm text-gray-600">
+                                        <span class="flex items-center">
+                                            <i class="ri-time-line mr-1"></i>
+                                            45 min
+                                        </span>
+                                        <span class="flex items-center">
+                                            <i class="ri-user-line mr-1"></i>
+                                            6 personnes
+                                        </span>
+                                        <span class="flex items-center">
+                                            <i class="ri-fire-line mr-1"></i>
+                                            Moyen
+                                        </span>
+                                    </div>
+                                </div>
+                                <button onclick="hideRecipeDetails(this)" class="text-gray-500 hover:text-gray-700">
+                                    <i class="ri-close-line text-2xl"></i>
+                                </button>
+                            </div>
+                            <div class="grid grid-cols-2 gap-8">
+                                <div>
+                                    <h4 class="font-semibold mb-4">Ingrédients</h4>
+                                    <ul class="space-y-2 text-gray-600">
+                                        <li>500g de viande d'agneau coupée en dés</li>
+                                        <li>2 oignons finement hachés</li>
+                                        <li>2 branches de céleri hachées</li>
+                                        <li>2 tomates pelées et concassées</li>
+                                        <li>150g de lentilles</li>
+                                        <li>100g de pois chiches trempés</li>
+                                        <li>Épices (safran, cumin, poivre, gingembre)</li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold mb-4">Instructions</h4>
+                                    <ol class="space-y-2 text-gray-600 list-decimal list-inside">
+                                        <li>Faire revenir la viande avec les oignons</li>
+                                        <li>Ajouter les épices et faire revenir 5 minutes</li>
+                                        <li>Ajouter les légumes et couvrir d'eau</li>
+                                        <li>Laisser mijoter 1h à feu doux</li>
+                                        <li>Ajouter les pois chiches et lentilles</li>
+                                        <li>Cuire encore 30 minutes jusqu'à ce que tout soit tendre</li>
+                                    </ol>
+                                </div>
+                            </div>
+                            <div class="mt-8">
+                                <h4 class="font-semibold mb-4">Commentaires</h4>
+                                <div class="space-y-4 mb-6">
+                                    <div class="flex items-start space-x-4">
+                                        <img src="https://public.readdy.ai/ai/img_res/6c73c89fc2ffcc767a430badfa2b9b1b.jpg"
+                                            class="w-10 h-10 rounded-full" alt="User">
+                                        <div>
+                                            <div class="flex items-center">
+                                                <span class="font-medium">Sophie Martin</span>
+                                                <span class="text-gray-500 text-sm ml-2">Il y a 3 jours</span>
+                                            </div>
+                                            <p class="text-gray-600 mt-1">Excellente recette ! Je l'ai essayée hier,
+                                                c'était délicieux.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <form class="space-y-4" onsubmit="addRecipeComment(event, this)">
+                                    <div>
+                                        <input type="text" placeholder="Votre nom"
+                                            class="w-full px-3 py-2 text-sm border rounded-lg focus:ring-2 focus:ring-primary focus:border-primary">
+                                    </div>
+                                    <div>
+                                        <textarea placeholder="Votre commentaire"
+                                            class="w-full px-3 py-2 text-sm border rounded-lg focus:ring-2 focus:ring-primary focus:border-primary h-20"></textarea>
+                                    </div>
+                                    <div class="flex justify-end space-x-4">
+                                        <button type="button" onclick="hideRecipeDetails(this)"
+                                            class="!rounded-button px-6 py-2 border border-gray-300 text-gray-700 hover:bg-gray-50 whitespace-nowrap">
+                                            Annuler
+                                        </button>
+                                        <button type="submit"
+                                            class="!rounded-button bg-primary text-white px-4 py-2 hover:bg-opacity-90 whitespace-nowrap">
+                                            Publier le commentaire
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <script>
+                        function showExperienceForm() {
+                            document.getElementById('experienceFormModal').classList.remove('hidden');
+                            document.body.style.overflow = 'hidden';
+                        }
+                        function hideExperienceForm() {
+                            document.getElementById('experienceFormModal').classList.add('hidden');
+                            document.body.style.overflow = 'auto';
+                        }
+                        document.getElementById('experienceForm').addEventListener('submit', function (e) {
+                            e.preventDefault();
+                            const formData = new FormData(e.target);
+                            // Here you would typically send the data to your backend
+                            hideExperienceForm();
+                            // Show success message
+                            const successMessage = document.createElement('div');
+                            successMessage.className = 'fixed top-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-50';
+                            successMessage.textContent = 'Votre expérience a été publiée avec succès!';
+                            document.body.appendChild(successMessage);
+                            setTimeout(() => {
+                                successMessage.remove();
+                            }, 3000);
+                        });
+                    </script>
+                </div>
+                <div class="w-1/2">
+                    <img src="https://public.readdy.ai/ai/img_res/3a6f4c6d90629a3cdf83a52a30378814.jpg"
+                        class="rounded-lg shadow-xl" alt="Ramadan illustration">
+                </div>
+            </div>
+        </section>
+        <section id="experiences" class="py-16 bg-white">
+            <div class="max-w-7xl mx-auto px-4">
+                <h2 class="text-3xl font-bold mb-12 text-center text-gradient">Expériences Partagées</h2>
+                <div class="grid grid-cols-3 gap-8">
+                    <div class="bg-white rounded-lg shadow-md overflow-hidden hover-scale hover-shadow">
+                        <img src="https://public.readdy.ai/ai/img_res/6bfe92d5bb97361045226c02304a35d8.jpg"
+                            class="w-full h-48 object-cover" alt="Experience">
+                        <div class="p-6">
+                            <h3 class="text-xl font-semibold mb-2">Mon Premier Ramadan en France</h3>
+                            <p class="text-black mb-4">Une expérience enrichissante de partage et de découverte...</p>
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center">
+                                    <img src="https://public.readdy.ai/ai/img_res/96adb9703b7c70dfc459f87a1f4382f1.jpg"
+                                        class="w-8 h-8 rounded-full" alt="Author">
+                                    <span class="ml-2 text-sm text-gray-600">Sarah Benali</span>
+                                </div>
+                                <div class="flex items-center space-x-4">
+                                    <button onclick="toggleLike(this)"
+                                        class="flex items-center text-black hover:text-primary transform transition-all duration-200 hover:scale-110">
+                                        <i class="ri-heart-line mr-1"></i>
+                                        <span>24</span>
+                                    </button>
+                                    <button onclick="showComments(this)"
+                                        class="flex items-center text-gray-500 hover:text-primary">
+                                        <i class="ri-chat-1-line mr-1"></i>
+                                        <span>12</span>
+                                    </button>
+                                    <div
+                                        class="hidden comments-section absolute left-0 right-0 bg-white p-6 mt-4 rounded-lg shadow-lg z-10">
+                                        <h4 class="text-lg font-semibold mb-4">Commentaires</h4>
+                                        <div class="space-y-4 mb-6">
+                                            <div class="flex items-start space-x-4">
+                                                <img src="https://readdy.ai/api/search-image?query=professional headshot of a young woman with natural makeup&width=40&height=40&orientation=squarish"
+                                                    class="w-10 h-10 rounded-full" alt="User">
+                                                <div>
+                                                    <div class="flex items-center">
+                                                        <span class="font-medium">Marie Dubois</span>
+                                                        <span class="text-gray-500 text-sm ml-2">Il y a 2 jours</span>
+                                                    </div>
+                                                    <p class="text-gray-600 mt-1">Merci pour ce partage ! C'est vraiment
+                                                        inspirant.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <form class="space-y-4" onsubmit="addComment(event, this)">
+                                            <div>
+                                                <input type="text" placeholder="Votre nom"
+                                                    class="w-full px-3 py-2 text-sm border rounded-lg focus:ring-2 focus:ring-primary focus:border-primary">
+                                            </div>
+                                            <div>
+                                                <textarea placeholder="Votre commentaire"
+                                                    class="w-full px-3 py-2 text-sm border rounded-lg focus:ring-2 focus:ring-primary focus:border-primary h-20"></textarea>
+                                            </div>
+                                            <button type="submit"
+                                                class="!rounded-button bg-primary text-white px-4 py-2 hover:bg-opacity-90 whitespace-nowrap">
+                                                Publier le commentaire
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Repeat similar cards with different content -->
+                </div>
+            </div>
+        </section>
+        <section id="recipes" class="py-16 bg-gray-50">
+            <div class="max-w-7xl mx-auto px-4">
+                <div class="flex justify-between items-center mb-8">
+                    <h2 class="text-3xl font-bold">Recettes Populaires</h2>
+                    <button onclick="showAddRecipeForm()"
+                        class="!rounded-button bg-primary text-white px-6 py-3 font-medium hover:bg-opacity-90 whitespace-nowrap flex items-center gap-2">
+                        <i class="ri-add-line"></i>
+                        Ajouter une recette
+                    </button>
+                </div>
+                <div class="flex justify-center mb-8 space-x-4">
+                    <button
+                        class="!rounded-button px-4 py-2 bg-primary text-white font-medium whitespace-nowrap hover:bg-opacity-90 transition-all duration-200 transform hover:-translate-y-0.5"
+                        data-category="tous">Tous</button>
+                    <button
+                        class="!rounded-button px-4 py-2 bg-white text-gray-700 font-medium whitespace-nowrap hover:bg-opacity-90 transition-all duration-200 transform hover:-translate-y-0.5"
+                        data-category="iftar">Iftar</button>
+                    <button
+                        class="!rounded-button px-4 py-2 bg-white text-gray-700 font-medium whitespace-nowrap hover:bg-opacity-90 transition-all duration-200 transform hover:-translate-y-0.5"
+                        data-category="suhoor">Suhoor</button>
+                    <button
+                        class="!rounded-button px-4 py-2 bg-white text-gray-700 font-medium whitespace-nowrap hover:bg-opacity-90 transition-all duration-200 transform hover:-translate-y-0.5"
+                        data-category="desserts">Desserts</button>
+                </div>
+                <div class="grid grid-cols-3 gap-8" id="recipes-grid">
+                    <div class="bg-white rounded-lg shadow-lg overflow-hidden hover-scale hover-shadow group"
+                        data-category="iftar">
+                        <div class="relative">
+                            <img src="https://public.readdy.ai/ai/img_res/75ac15e5306318a5d5246608c6f25cb1.jpg"
+                                class="w-full h-64 object-cover transition-transform duration-300 group-hover:scale-105"
+                                alt="Recipe">
+                            <div class="absolute top-4 right-4 bg-white rounded-full p-2 shadow-md">
+                                <i class="ri-heart-line text-primary text-xl"></i>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-center space-x-2 mb-3">
+                                <span
+                                    class="bg-primary bg-opacity-10 text-primary text-sm px-3 py-1 rounded-full">Iftar</span>
+                                <span
+                                    class="bg-gray-100 text-gray-600 text-sm px-3 py-1 rounded-full flex items-center">
+                                    <i class="ri-time-line mr-1"></i>
+                                    45 min
+                                </span>
+                            </div>
+                            <h3 class="text-xl font-semibold mb-3 text-gray-900">Harira Traditionnelle</h3>
+                            <p class="text-gray-600 mb-4">Soupe traditionnelle marocaine riche en saveurs, parfaite pour
+                                la rupture du jeûne.</p>
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center space-x-2">
+                                    <img src="https://public.readdy.ai/ai/img_res/485d6d0f6b5547e0a559deadc560ac44.jpg"
+                                        class="w-8 h-8 rounded-full" alt="Chef">
+                                    <span class="text-sm text-gray-600">Par Amina Lahlou</span>
+                                </div>
+                                <button onclick="showRecipeDetails(this)"
+                                    class="!rounded-button bg-primary text-white px-4 py-2 text-sm font-medium hover:bg-opacity-90 whitespace-nowrap flex items-center">
+                                    <i class="ri-eye-line mr-2"></i>
+                                    Voir la recette
+                                </button>
+                            </div>
+                            <div
+                                class="hidden recipe-details absolute left-0 right-0 bg-white p-6 mt-4 rounded-lg shadow-lg z-10">
+                                <div class="flex justify-between items-start mb-6">
+                                    <div>
+                                        <h3 class="text-2xl font-bold mb-2">Harira Traditionnelle</h3>
+                                        <div class="flex items-center space-x-4 text-sm text-gray-600">
+                                            <span class="flex items-center">
+                                                <i class="ri-time-line mr-1"></i>
+                                                45 min
+                                            </span>
+                                            <span class="flex items-center">
+                                                <i class="ri-user-line mr-1"></i>
+                                                6 personnes
+                                            </span>
+                                            <span class="flex items-center">
+                                                <i class="ri-fire-line mr-1"></i>
+                                                Moyen
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <button onclick="hideRecipeDetails(this)" class="text-gray-500 hover:text-gray-700">
+                                        <i class="ri-close-line text-2xl"></i>
+                                    </button>
+                                </div>
+                                <div class="grid grid-cols-2 gap-8">
+                                    <div>
+                                        <h4 class="font-semibold mb-4">Ingrédients</h4>
+                                        <ul class="space-y-2 text-gray-600">
+                                            <li>500g de viande d'agneau coupée en dés</li>
+                                            <li>2 oignons finement hachés</li>
+                                            <li>2 branches de céleri hachées</li>
+                                            <li>2 tomates pelées et concassées</li>
+                                            <li>150g de lentilles</li>
+                                            <li>100g de pois chiches trempés</li>
+                                            <li>Épices (safran, cumin, poivre, gingembre)</li>
+                                        </ul>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-semibold mb-4">Instructions</h4>
+                                        <ol class="space-y-2 text-gray-600 list-decimal list-inside">
+                                            <li>Faire revenir la viande avec les oignons</li>
+                                            <li>Ajouter les épices et faire revenir 5 minutes</li>
+                                            <li>Ajouter les légumes et couvrir d'eau</li>
+                                            <li>Laisser mijoter 1h à feu doux</li>
+                                            <li>Ajouter les pois chiches et lentilles</li>
+                                            <li>Cuire encore 30 minutes jusqu'à ce que tout soit tendre</li>
+                                        </ol>
+                                    </div>
+                                </div>
+                                <div class="mt-8">
+                                    <h4 class="font-semibold mb-4">Commentaires</h4>
+                                    <div class="space-y-4 mb-6">
+                                        <div class="flex items-start space-x-4">
+                                            <img src="https://readdy.ai/api/search-image?query=professional headshot of a middle aged woman with elegant style&width=40&height=40&orientation=squarish"
+                                                class="w-10 h-10 rounded-full" alt="User">
+                                            <div>
+                                                <div class="flex items-center">
+                                                    <span class="font-medium">Sophie Martin</span>
+                                                    <span class="text-gray-500 text-sm ml-2">Il y a 3 jours</span>
+                                                </div>
+                                                <p class="text-gray-600 mt-1">Excellente recette ! Je l'ai essayée hier,
+                                                    c'était délicieux.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <form class="space-y-4" onsubmit="addRecipeComment(event, this)">
+                                        <div>
+                                            <input type="text" placeholder="Votre nom"
+                                                class="w-full px-3 py-2 text-sm border rounded-lg focus:ring-2 focus:ring-primary focus:border-primary">
+                                        </div>
+                                        <div>
+                                            <textarea placeholder="Votre commentaire"
+                                                class="w-full px-3 py-2 text-sm border rounded-lg focus:ring-2 focus:ring-primary focus:border-primary h-20"></textarea>
+                                        </div>
+                                        <button type="submit"
+                                            class="!rounded-button bg-primary text-white px-4 py-2 hover:bg-opacity-90 whitespace-nowrap">
+                                            Publier le commentaire
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg shadow-lg overflow-hidden hover-scale hover-shadow group"
+                    data-category="suhoor">
+                    <div class="relative">
+                        <img src="https://public.readdy.ai/ai/img_res/d1f702049b9248d73f56566814fec892.jpg"
+                            class="w-full h-64 object-cover transition-transform duration-300 group-hover:scale-105"
+                            alt="Recipe">
+                        <div class="absolute top-4 right-4 bg-white rounded-full p-2 shadow-md">
+                            <i class="ri-heart-line text-primary text-xl"></i>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center space-x-2 mb-3">
+                            <span
+                                class="bg-secondary bg-opacity-10 text-secondary text-sm px-3 py-1 rounded-full">Suhoor</span>
+                            <span class="bg-gray-100 text-gray-600 text-sm px-3 py-1 rounded-full flex items-center">
+                                <i class="ri-time-line mr-1"></i>
+                                30 min
+                            </span>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-3 text-gray-900">Msemen au Miel</h3>
+                        <p class="text-gray-600 mb-4">Crêpes feuilletées traditionnelles servies avec du miel et du thé
+                            à la menthe.</p>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-2">
+                                <img src="https://public.readdy.ai/ai/img_res/8044e9d73821307228b3b739f9b939fc.jpg"
+                                    class="w-8 h-8 rounded-full" alt="Chef">
+                                <span class="text-sm text-gray-600">Par Fatima Zahra</span>
+                            </div>
+                            <button onclick="showRecipeDetails(this)"
+                                class="!rounded-button bg-primary text-white px-4 py-2 text-sm font-medium hover:bg-opacity-90 whitespace-nowrap flex items-center">
+                                <i class="ri-eye-line mr-2"></i>
+                                Voir la recette
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg shadow-lg overflow-hidden hover-scale hover-shadow group"
+                    data-category="desserts">
+                    <div class="relative">
+                        <img src="https://public.readdy.ai/ai/img_res/bdbb1946524092e3bd6060eaab0ce17e.jpg"
+                            class="w-full h-64 object-cover transition-transform duration-300 group-hover:scale-105"
+                            alt="Recipe">
+                        <div class="absolute top-4 right-4 bg-white rounded-full p-2 shadow-md">
+                            <i class="ri-heart-line text-primary text-xl"></i>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center space-x-2 mb-3">
+                            <span class="bg-pink-100 text-pink-600 text-sm px-3 py-1 rounded-full">Desserts</span>
+                            <span class="bg-gray-100 text-gray-600 text-sm px-3 py-1 rounded-full flex items-center">
+                                <i class="ri-time-line mr-1"></i>
+                                40 min
+                            </span>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-3 text-gray-900">Zlabia au Miel</h3>
+                        <p class="text-gray-600 mb-4">Pâtisserie traditionnelle en spirale, frite et trempée dans un
+                            sirop parfumé.</p>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-2">
+                                <img src="https://public.readdy.ai/ai/img_res/ceb0503cec829e2971fbd67627422ae7.jpg"
+                                    class="w-8 h-8 rounded-full" alt="Chef">
+                                <span class="text-sm text-gray-600">Par Yasmine Alami</span>
+                            </div>
+                            <button onclick="showRecipeDetails(this)"
+                                class="!rounded-button bg-primary text-white px-4 py-2 text-sm font-medium hover:bg-opacity-90 whitespace-nowrap flex items-center">
+                                <i class="ri-eye-line mr-2"></i>
+                                Voir la recette
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg shadow-md overflow-hidden hover-scale hover-shadow"
+                    data-category="iftar">
+                    <img src="https://public.readdy.ai/ai/img_res/812151623b5d64a5360fdec1a74e0930.jpg"
+                        class="w-full h-48 object-cover" alt="Recipe">
+                    <div class="p-4">
+                        <h3 class="text-lg font-semibold mb-2">Pastilla au Poulet</h3>
+                        <div class="flex items-center justify-between text-sm text-gray-600 mb-4">
+                            <span class="flex items-center">
+                                <i class="ri-time-line mr-1"></i>
+                                90 min
+                            </span>
+                            <span class="flex items-center">
+                                <i class="ri-star-line mr-1"></i>
+                                Difficile
+                            </span>
+                        </div>
+                        <button onclick="showRecipeDetails(this)"
+                            class="w-full !rounded-button bg-primary text-white py-2 text-sm font-medium hover:bg-opacity-90 whitespace-nowrap">
+                            Voir la recette
+                        </button>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </section>
+        <script>
+            function showAddRecipeForm() {
+                const modal = document.createElement('div');
+                modal.className = 'fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center';
+                modal.innerHTML =
+                    <div class="bg-white rounded-lg p-6 max-w-lg w-full mx-4 max-h-[90vh] overflow-y-auto">
+                        <div class="flex justify-between items-center mb-6">
+                            <h3 class="text-2xl font-bold text-gray-900">Ajouter une nouvelle recette</h3>
+                            <button onclick="this.closest('.fixed').remove()" class="text-gray-500 hover:text-gray-700">
+                                <i class="ri-close-line text-2xl"></i>
+                            </button>
+                        </div>
+                        <form onsubmit="handleAddRecipe(event)" class="space-y-6 custom-scrollbar">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Votre nom</label>
+                                <input required type="text" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-primary" placeholder="Entrez votre nom"/>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Titre de la recette</label>
+                                <input required type="text" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-primary"/>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Catégorie</label>
+                                <select required class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-primary">
+                                    <option value="iftar">Iftar</option>
+                                    <option value="suhoor">Suhoor</option>
+                                    <option value="desserts">Desserts</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Temps de préparation (minutes)</label>
+                                <input required type="number" min="1" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-primary"/>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Description</label>
+                                <textarea required class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-primary h-24"></textarea>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">URL de la photo</label>
+                                <input type="url" required class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-primary" placeholder="Entrez l'URL de votre image"/>
+                            </div>
+                            <div class="flex justify-end space-x-4">
+                                <button type="button" onclick="this.closest('.fixed').remove()" class="!rounded-button px-6 py-2 border border-gray-300 text-gray-700 hover:bg-gray-50 whitespace-nowrap">
+                                    Annuler
+                                </button>
+                                <button type="submit" class="!rounded-button bg-primary text-white px-6 py-2 hover:bg-opacity-90 whitespace-nowrap">
+                                    Publier la recette
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                    ;
+                document.body.appendChild(modal);
+            }
+            function handleAddRecipe(event) {
+                event.preventDefault();
+                const form = event.target;
+                const title = form.querySelector('input[type="text"]').value;
+                const category = form.querySelector('select').value;
+                const time = form.querySelector('input[type="number"]').value;
+                const description = form.querySelector('textarea').value;
+                // Here you would typically send the data to your backend
+                // Show success message
+                showToast('Votre recette a été publiée avec succès!');
+                // Close the modal
+                form.closest('.fixed').remove();
+            }
+            document.addEventListener('DOMContentLoaded', function () {
+                const filterButtons = document.querySelectorAll('#recipes .!rounded-button');
+                const recipeCards = document.querySelectorAll('#recipes-grid > div');
+                filterButtons.forEach(button => {
+                    button.addEventListener('click', function () {
+                        // Remove active class from all buttons
+                        filterButtons.forEach(btn => {
+                            btn.classList.remove('bg-primary', 'text-white');
+                            btn.classList.add('bg-white', 'text-gray-700');
+                        });
+                        // Add active class to clicked button
+                        this.classList.remove('bg-white', 'text-gray-700');
+                        this.classList.add('bg-primary', 'text-white');
+                        const category = this.textContent.toLowerCase();
+                        recipeCards.forEach(card => {
+                            if (category === 'tous' || card.dataset.category === category) {
+                                card.style.display = 'block';
+                            } else {
+                                card.style.display = 'none';
+                            }
+                        });
+                    });
+                });
+            });
+        </script>
+        <section id="stats" class="py-16 bg-white">
+            <div class="max-w-7xl mx-auto px-4">
+                <div class="grid grid-cols-2 gap-8">
+                    <div>
+                        <h2 class="text-3xl font-bold mb-8">Statistiques</h2>
+                        <div class="grid grid-cols-3 gap-6">
+                            <div class="bg-gray-50 rounded-lg p-6">
+                                <div class="flex items-center justify-between mb-2">
+                                    <span class="text-gray-600">Recettes partagées</span>
+                                    <div
+                                        class="w-10 h-10 flex items-center justify-center bg-secondary bg-opacity-10 rounded-full">
+                                        <i class="ri-book-2-line text-secondary text-xl"></i>
+                                    </div>
+                                </div>
+                                <div class="text-3xl font-bold text-gray-900">1,283</div>
+                                <div class="text-sm text-gray-500 mt-2">+23% ce mois</div>
+                            </div>
+                            <div class="bg-gray-50 rounded-lg p-6">
+                                <div class="flex items-center justify-between mb-2">
+                                    <span class="text-gray-600">Commentaires</span>
+                                    <div
+                                        class="w-10 h-10 flex items-center justify-center bg-green-500 bg-opacity-10 rounded-full">
+                                        <i class="ri-chat-1-line text-green-500 text-xl"></i>
+                                    </div>
+                                </div>
+                                <div class="text-3xl font-bold text-gray-900">8,942</div>
+                                <div class="text-sm text-gray-500 mt-2">+8% cette semaine</div>
+                            </div>
+                            <div class="bg-gray-50 rounded-lg p-6">
+                                <div class="flex items-center justify-between mb-2">
+                                    <span class="text-gray-600">Expériences partagées</span>
+                                    <div
+                                        class="w-10 h-10 flex items-center justify-center bg-primary bg-opacity-10 rounded-full">
+                                        <i class="ri-user-heart-line text-primary text-xl"></i>
+                                    </div>
+                                </div>
+                                <div class="text-3xl font-bold text-gray-900">3,567</div>
+                                <div class="text-sm text-gray-500 mt-2">+15% ce mois</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <h2 class="text-3xl font-bold mb-8">Top Recettes</h2>
+                        <div class="space-y-4">
+                            <div class="flex items-center p-4 bg-gray-50 rounded-lg">
+                                <img src="https://public.readdy.ai/ai/img_res/bd73c23b78fd160a632d2f6d974bca57.jpg"
+                                    class="w-20 h-20 rounded-lg object-cover" alt="Top recipe">
+                                <div class="ml-4">
+                                    <h3 class="font-semibold">Briouates aux Amandes</h3>
+                                    <div class="flex items-center mt-2">
+                                        <i class="ri-chat-1-fill text-primary mr-1"></i>
+                                        <span class="text-sm text-black">324 commentaires</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Repeat for other top recipes -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="grid grid-cols-4 gap-8">
+                <div>
+                    <span class="text-2xl font-['Pacifico'] text-white mb-4 block">logo</span>
+                    <p class="text-gray-200">Partagez et découvrez les meilleures expériences du Ramadan 2025.</p>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Navigation</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white">Accueil</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Expériences</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Recettes</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Communauté</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Suivez-nous</h3>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white">
+                            <i class="ri-facebook-fill text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white">
+                            <i class="ri-twitter-fill text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white">
+                            <i class="ri-instagram-fill text-xl"></i>
+                        </a>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Newsletter</h3>
+                    <div class="flex">
+                        <input type="email" placeholder="Votre email"
+                            class="flex-1 px-4 py-2 rounded-l-lg focus:outline-none text-gray-900">
+                        <button
+                            class="!rounded-r-lg !rounded-l-none bg-primary px-4 py-2 font-medium hover:bg-opacity-90 whitespace-nowrap">
+                            S'abonner
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-12 pt-8 border-t border-gray-800 text-center text-gray-400">
+                <p>&copy; 2025 Ramadan Platform. Tous droits réservés.</p>
+            </div>
+        </div>
+    </footer>
+    <script>
+        // 点赞功能
+        function toggleLike(button) {
+            const likeCount = button.querySelector('span');
+            const currentCount = parseInt(likeCount.textContent);
+            const isLiked = button.classList.contains('text-primary');
+            if (isLiked) {
+                likeCount.textContent = currentCount - 1;
+                button.classList.remove('text-primary');
+            } else {
+                likeCount.textContent = currentCount + 1;
+                button.classList.add('text-primary');
+            }
+            // 添加动画效果
+            button.querySelector('i').classList.add('animate-bounce');
+            setTimeout(() => {
+                button.querySelector('i').classList.remove('animate-bounce');
+            }, 1000);
+        }
+        // 评论功能增强
+        function showComments(button) {
+            const commentsSection = document.querySelector('.comments-section');
+            commentsSection.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+            // 添加淡入动画
+            commentsSection.classList.add('animate-fadeIn');
+        }
+        function hideComments(button) {
+            const commentsSection = button.closest('.comments-section');
+            commentsSection.classList.add('animate-fadeOut');
+            setTimeout(() => {
+                commentsSection.classList.add('hidden');
+                commentsSection.classList.remove('animate-fadeOut');
+                document.body.style.overflow = 'auto';
+            }, 300);
+        }
+        function addComment(event, form) {
+            event.preventDefault();
+            const name = form.querySelector('input[type="text"]').value;
+            const comment = form.querySelector('textarea').value;
+            if (!name || !comment) {
+                showToast('请填写完整的评论信息');
+                return;
+            }
+            const commentsContainer = form.previousElementSibling;
+            const newComment = document.createElement('div');
+            newComment.className = 'flex items-start space-x-4 opacity-0 transform translate-y-4';
+            newComment.innerHTML =
+                <img src="https://readdy.ai/api/search-image?query=professional headshot of a person with natural lighting&width=40&height=40&orientation=squarish&flag=97103d9c8d09198c91649230e3d1e0ea&flag=8ec1259f531bd81e12037dee0175aa62&flag=97103d9c8d09198c91649230e3d1e0ea&flag=8ec1259f531bd81e12037dee0175aa62&seed=${Math.random()}" class="w-10 h-10 rounded-full" alt="User">
+                    <div>
+                        <div class="flex items-center">
+                            <span class="font-medium">${name}</span>
+                            <span class="text-gray-500 text-sm ml-2">À l'instant</span>
+                        </div>
+                        <p class="text-gray-600 mt-1">${comment}</p>
+                    </div>
+                    ;
+                    commentsContainer.appendChild(newComment);
+// 添加评论动画
+setTimeout(() => {
+                        newComment.classList.add('transition-all', 'duration-500', 'opacity-100', 'translate-y-0');
+}, 10);
+                    form.reset();
+                    showToast('评论发布成功！');
+}
+                    // 食谱详情交互增强
+                    function showRecipeDetails(button) {
+const recipeDetails = document.querySelector('.recipe-details');
+                    recipeDetails.classList.remove('hidden');
+                    document.body.style.overflow = 'hidden';
+                    // 添加滑入动画
+                    recipeDetails.classList.add('animate-slideIn');
+}
+                    function hideRecipeDetails(button) {
+const recipeDetails = button.closest('.recipe-details');
+                    recipeDetails.classList.add('animate-slideOut');
+setTimeout(() => {
+                        recipeDetails.classList.add('hidden');
+                    recipeDetails.classList.remove('animate-slideOut');
+                    document.body.style.overflow = 'auto';
+}, 300);
+}
+                    // 食谱评论功能
+                    function addRecipeComment(event, form) {
+                        event.preventDefault();
+                    const name = form.querySelector('input[type="text"]').value;
+                    const comment = form.querySelector('textarea').value;
+                    if (!name || !comment) {
+                        showToast('请填写完整的评论信息');
+                    return;
+}
+                    const commentsContainer = form.previousElementSibling;
+                    const newComment = document.createElement('div');
+                    newComment.className = 'flex items-start space-x-4 opacity-0 transform translate-y-4';
+                    newComment.innerHTML =
+                    <img src="https://readdy.ai/api/search-image?query=professional headshot of a person with natural lighting&width=40&height=40&orientation=squarish&seed=${Math.random()}" class="w-10 h-10 rounded-full" alt="User">
+                        <div>
+                            <div class="flex items-center">
+                                <span class="font-medium">${name}</span>
+                                <span class="text-gray-500 text-sm ml-2">À l'instant</span>
+                            </div>
+                            <p class="text-gray-600 mt-1">${comment}</p>
+                        </div>
+                        ;
+                        commentsContainer.appendChild(newComment);
+// 添加评论动画
+setTimeout(() => {
+                            newComment.classList.add('transition-all', 'duration-500', 'opacity-100', 'translate-y-0');
+}, 10);
+                        form.reset();
+                        showToast('评论发布成功！');
+}
+                        // 通用提示框
+                        function showToast(message) {
+const toast = document.createElement('div');
+                        toast.className = 'fixed top-4 right-4 bg-black bg-opacity-80 text-white px-6 py-3 rounded-lg shadow-lg z-50 transform translate-y-[-100%] opacity-0 transition-all duration-300';
+                        toast.textContent = message;
+                        document.body.appendChild(toast);
+setTimeout(() => {
+                            toast.classList.add('translate-y-0', 'opacity-100');
+}, 10);
+setTimeout(() => {
+                            toast.classList.remove('translate-y-0', 'opacity-100');
+setTimeout(() => toast.remove(), 300);
+}, 3000);
+}
+                        // 页面滚动监听
+                        document.addEventListener('DOMContentLoaded', function() {
+const sections = document.querySelectorAll('section');
+                        const navLinks = document.querySelectorAll('nav a[href^="#"]');
+window.addEventListener('scroll', () => {
+                            let current = '';
+sections.forEach(section => {
+const sectionTop = section.offsetTop;
+                        const sectionHeight = section.clientHeight;
+if (pageYOffset >= sectionTop - 200) {
+                            current = section.getAttribute('id');
+}
+});
+navLinks.forEach(link => {
+                            link.classList.remove('text-primary');
+                        if (link.getAttribute('href').substring(1) === current) {
+                            link.classList.add('text-primary');
+}
+});
+});
+// 平滑滚动
+navLinks.forEach(link => {
+                            link.addEventListener('click', function (e) {
+                                e.preventDefault();
+                                const targetId = this.getAttribute('href');
+                                const targetSection = document.querySelector(targetId);
+                                if (targetSection) {
+                                    targetSection.scrollIntoView({
+                                        behavior: 'smooth'
+                                    });
+                                }
+                            });
+});
+});
+                        // 食谱筛选动画
+                        document.addEventListener('DOMContentLoaded', function() {
+const filterButtons = document.querySelectorAll('#recipes .!rounded-button');
+const recipeCards = document.querySelectorAll('#recipes-grid > div');
+filterButtons.forEach(button => {
+                            button.addEventListener('click', function () {
+                                filterButtons.forEach(btn => {
+                                    btn.classList.remove('bg-primary', 'text-white');
+                                    btn.classList.add('bg-white', 'text-gray-700');
+                                });
+                                this.classList.remove('bg-white', 'text-gray-700');
+                                this.classList.add('bg-primary', 'text-white');
+                                const category = this.textContent.toLowerCase();
+                                recipeCards.forEach(card => {
+                                    card.style.transition = 'all 0.3s ease-in-out';
+                                    if (category === 'tous' || card.dataset.category === category) {
+                                        card.style.opacity = '0';
+                                        card.style.transform = 'scale(0.95)';
+                                        setTimeout(() => {
+                                            card.style.display = 'block';
+                                            setTimeout(() => {
+                                                card.style.opacity = '1';
+                                                card.style.transform = 'scale(1)';
+                                            }, 50);
+                                        }, 300);
+                                    } else {
+                                        card.style.opacity = '0';
+                                        card.style.transform = 'scale(0.95)';
+                                        setTimeout(() => {
+                                            card.style.display = 'none';
+                                        }, 300);
+                                    }
+                                });
+                            });
+});
+});
+    </script>
+    <style>
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeOut {
+            from {
+                opacity: 1;
+            }
+
+            to {
+                opacity: 0;
+            }
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(100%);
+            }
+
+            to {
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideOut {
+            from {
+                transform: translateY(0);
+            }
+
+            to {
+                transform: translateY(100%);
+            }
+        }
+
+        .animate-fadeIn {
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        .animate-fadeOut {
+            animation: fadeOut 0.3s ease-in-out;
+        }
+
+        .animate-slideIn {
+            animation: slideIn 0.3s ease-in-out;
+        }
+
+        .animate-slideOut {
+            animation: slideOut 0.3s ease-in-out;
+        }
+
+        .animate-bounce {
+            animation: bounce 1s ease-in-out;
+        }
+
+        @keyframes bounce {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-25%);
+            }
+        }
+    </style>
+</body>
+
+</html>
