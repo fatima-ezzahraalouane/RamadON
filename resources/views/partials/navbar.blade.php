@@ -10,6 +10,17 @@
                     <a href="{{ url('/stats') }}" class="text-gray-900 hover:text-primary px-3 py-2 text-sm font-medium">Statistiques</a>
                 </div>
             </div>
+            <div class="flex items-center space-x-4">
+                <div class="relative">
+                    <input type="text" placeholder="Rechercher..." class="w-64 pl-10 pr-4 py-2 text-sm border rounded-full focus:outline-none focus:border-primary">
+                    <div class="absolute left-3 top-2 w-5 h-5 flex items-center justify-center">
+                        <i class="ri-search-line text-gray-400"></i>
+                    </div>
+                </div>
+                <button class="rounded-lg bg-black text-white px-4 py-2 text-sm font-medium hover:bg-purple-900 whitespace-nowrap">
+                    Se connecter
+                </button>
+            </div>
         </div>
     </div>
 </nav>
