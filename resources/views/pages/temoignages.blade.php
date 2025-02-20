@@ -23,6 +23,7 @@
                                     <i class="ri-heart-line mr-1"></i>
                                     <span>24</span>
                                 </button>
+                                <!-- Commentaire -->
                                 <button class="flex items-center text-gray-500 hover:text-primary">
                                     <i class="ri-chat-1-line mr-1"></i>
                                     <span>12</span>
