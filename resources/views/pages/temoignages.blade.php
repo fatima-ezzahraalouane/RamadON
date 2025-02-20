@@ -15,7 +15,7 @@
                         <p class="text-black mb-4">{{ Str::limit($temoignage->contenu, 100) }}</p>
                         <div class="flex items-center justify-between">
                             <div class="flex items-center">
-                                <img src="https://freesvg.org/img/publicdomainq-0006224bvmrqd.png" class="w-8 h-8 rounded-full" alt="Author">
+                                <img src="https://intranet.youcode.ma/storage/users/profile/1384-1728486655.JPG" class="w-8 h-8 rounded-full" alt="Author">
                                 <span class="ml-2 text-sm text-gray-600">{{ $temoignage->nom }}</span>
                             </div>
                             <div class="flex items-center space-x-4">

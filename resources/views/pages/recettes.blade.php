@@ -32,15 +32,15 @@
                     <div class="flex items-center space-x-2 mb-3">
                         <span class="bg-primary bg-opacity-10 text-primary text-sm px-3 py-1 rounded-full">{{ ucfirst($recette->categorie) }}</span>
                         <span class="bg-gray-100 text-gray-600 text-sm px-3 py-1 rounded-full flex items-center">
-                            <i class="ri-time-line mr-1"></i> {{ $recette->temps_preparation }} min
+                            <i class="ri-time-line mr-1"></i> {{ $recette->duree }} min
                         </span>
                     </div>
                     <h3 class="text-xl font-semibold mb-3 text-gray-900">{{ $recette->titre }}</h3>
                     <p class="text-gray-600 mb-4">{{ Str::limit($recette->description, 100) }}</p>
                     <div class="flex items-center justify-between">
                         <div class="flex items-center space-x-2">
-                            <img src="{{ $recette->user_avatar }}" class="w-8 h-8 rounded-full" alt="Auteur">
-                            <span class="text-sm text-gray-600">Par {{ $recette->auteur }}</span>
+                            <img src="https://intranet.youcode.ma/storage/users/profile/1384-1728486655.JPG" class="w-8 h-8 rounded-full" alt="Auteur">
+                            <span class="text-sm text-gray-600">Par {{ $recette->nom }}</span>
                         </div>
                         <a href="{{ route('recettes.show', $recette->id) }}" class="!rounded-button bg-primary text-white px-4 py-2 text-sm font-medium hover:bg-opacity-90 flex items-center">
                             <i class="ri-eye-line mr-2"></i> Voir la recette

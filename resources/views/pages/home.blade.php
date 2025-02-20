@@ -5,7 +5,7 @@
     <section id="hero" class="relative text-white w-full">
         <div class="max-w-7xl mx-auto px-4 flex items-center">
             <div class="w-1/2 pr-12">
-                <h1 class="text-5xl font-bold mb-6 text-black">Ramadan 2025</h1>
+                <h1 class="text-5xl font-bold mb-6 text-black">RamadON 2025</h1>
                 <p class="text-xl mb-8 text-black font-medium">Partagez vos expériences, recettes et moments spirituels avec notre communauté pendant ce mois sacré.</p>
                 <button onclick="showExperienceForm()" class="rounded-lg bg-black text-primary px-6 py-3 font-medium hover:bg-purple-900 whitespace-nowrap transform transition-all duration-200 hover:-translate-y-1 hover:shadow-lg">
                     Partager votre expérience
@@ -58,7 +58,7 @@
 
 <div id="successPopup" class="hidden fixed inset-0 flex items-center justify-center z-50">
     <div class="bg-gradient-to-r from-black to-purple-800 text-white px-8 py-6 rounded-lg shadow-2xl animate-fadeIn transform scale-95">
-        <h3 class="text-2xl font-bold">Expérience Publiée! 🎉🌙</h3>
+        <h3 class="text-2xl font-bold">Expérience Publiée! 🎉🕌🌙</h3>
         <p class="mt-2 text-lg">Votre expérience a été ajoutée avec succès.</p>
     </div>
 </div>
