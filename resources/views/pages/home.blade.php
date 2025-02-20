@@ -38,7 +38,7 @@
             </div>
             <div>
                 <label class="block text-sm font-medium text-gray-700 mb-2">Description</label>
-                <textarea required class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-primary h-32 resize-none" placeholder="Partagez votre expérience..."></textarea>
+                <textarea required class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-primary h-20 resize-none" placeholder="Partagez votre expérience..."></textarea>
             </div>
             <div>
                 <label class="block text-sm font-medium text-gray-700 mb-2">URL de la photo</label>
