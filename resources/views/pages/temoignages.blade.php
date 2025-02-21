@@ -36,7 +36,7 @@
 
             <!-- Comment Modal -->
             <div id="commentModal-{{ $temoignage->id }}" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center">
-                <div class="bg-white rounded-lg p-6 max-w-lg w-full mx-4 shadow-xl">
+                <div class="bg-white rounded-lg p-6 max-w-lg w-full mx-4 shadow-xl max-h-[80vh] overflow-y-auto [&::-webkit-scrollbar]:hidden">
                     <div class="flex justify-between items-center mb-6">
                         <h3 class="text-2xl font-bold text-gray-900">Commentaires</h3>
                         <button onclick="document.getElementById('commentModal-{{ $temoignage->id }}').classList.add('hidden')"
