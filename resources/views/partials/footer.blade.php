@@ -52,6 +52,6 @@
 
     <!-- Copyright Section -->
     <div class="mt-12 pt-6 border-t border-gray-800 text-center text-gray-400">
-        <p>&copy; 2025 Ramadan Platform. Tous droits réservés.</p>
+        <p>&copy; 2025 RamadON Platform. Tous droits réservés.</p>
     </div>
 </footer>

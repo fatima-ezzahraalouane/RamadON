@@ -7,7 +7,7 @@
                     <a href="{{ url('/') }}" class="text-gray-900 hover:text-primary px-3 py-2 text-sm font-medium">Accueil</a>
                     <a href="{{ url('/temoignages') }}" class="text-gray-900 hover:text-primary px-3 py-2 text-sm font-medium">Expériences</a>
                     <a href="{{ url('/recettes') }}" class="text-gray-900 hover:text-primary px-3 py-2 text-sm font-medium">Recettes</a>
-                    <a href="{{ url('/stats') }}" class="text-gray-900 hover:text-primary px-3 py-2 text-sm font-medium">Statistiques</a>
+                    <a href="{{ url('/statistiques') }}" class="text-gray-900 hover:text-primary px-3 py-2 text-sm font-medium">Statistiques</a>
                 </div>
             </div>
             <div class="flex items-center space-x-4">
