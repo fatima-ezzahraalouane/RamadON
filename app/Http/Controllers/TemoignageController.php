@@ -23,11 +23,22 @@ class TemoignageController extends Controller
             'nom' => 'required|string|max:255',
             'titre' => 'required|string|max:255',
             'contenu' => 'required|string',
-            'image_url' => 'nullable|url',
+            'image_url' => 'nullable|url|max:255',
         ]);
 
-        $temoignage = Temoignage::create($request->all());
+        Temoignage::create($request->all());
 
-        return response()->json($temoignage, 201);
+
+        // $temoignage = Temoignage::create($request->all());
+        // return response()->json($temoignage, status: 201);
+
+        // Temoignage::create([
+        //     'nom' => $request->nom,
+        //     'titre' => $request->titre,
+        //     'contenu' => $request->contenu,
+        //     'image_url' => $request->image_url,
+        // ]);
+
+        return redirect()->back()->with('success', 'Votre expérience a été ajoutée avec succès.');
     }
 }
