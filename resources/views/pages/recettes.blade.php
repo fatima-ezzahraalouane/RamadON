@@ -8,24 +8,24 @@
         <div class="flex justify-between items-center mb-8">
             <h2 class="text-3xl font-bold">Recettes Populaires</h2>
             <button onclick="document.getElementById('addRecipeModal').classList.remove('hidden')"
-            class="rounded-lg bg-black text-white px-6 py-3 font-medium hover:bg-purple-900 flex items-center gap-2">
+                class="rounded-lg bg-black text-white px-6 py-3 font-medium hover:bg-purple-900 flex items-center gap-2">
                 <i class="ri-add-line"></i> Ajouter une recette
             </button>
         </div>
 
         <div class="flex justify-center mb-8 space-x-4">
-    <a href="{{ route('recettes.index', ['categorie' => 'tous']) }}"
-       class="rounded-lg px-4 py-2 {{ request('categorie') == 'tous' || !request('categorie') ? 'bg-black text-white' : 'bg-white text-gray-700' }} font-medium hover:bg-purple-900">
-       Tous
-    </a>
+            <a href="{{ route('recettes.index', ['categorie' => 'tous']) }}"
+                class="rounded-lg px-4 py-2 {{ request('categorie') == 'tous' || !request('categorie') ? 'bg-black text-white' : 'bg-white text-gray-700' }} font-medium hover:bg-purple-900">
+                Tous
+            </a>
 
-    @foreach($categories as $cat)
-        <a href="{{ route('recettes.index', ['categorie' => $cat->nom]) }}"
-           class="rounded-lg px-4 py-2 {{ request('categorie') == $cat->nom ? 'bg-black text-white' : 'bg-white text-gray-700' }} font-medium hover:bg-purple-900">
-           {{ ucfirst($cat->nom) }}
-        </a>
-    @endforeach
-</div>
+            @foreach($categories as $cat)
+            <a href="{{ route('recettes.index', ['categorie' => $cat->nom]) }}"
+                class="rounded-lg px-4 py-2 {{ request('categorie') == $cat->nom ? 'bg-black text-white' : 'bg-white text-gray-700' }} font-medium hover:bg-purple-900">
+                {{ ucfirst($cat->nom) }}
+            </a>
+            @endforeach
+        </div>
 
         <div class="grid grid-cols-3 gap-8" id="recipes-grid">
             @foreach($recettes as $recette)
@@ -38,8 +38,8 @@
                 </div>
                 <div class="p-6">
                     <div class="flex items-center space-x-2 mb-3">
-                    <span class="bg-purple-900 text-white text-sm px-3 py-1 rounded-full">{{ ucfirst($recette->categorie->nom) }}</span>
-                    <span class="bg-gray-100 text-gray-600 text-sm px-3 py-1 rounded-full flex items-center">
+                        <span class="bg-purple-900 text-white text-sm px-3 py-1 rounded-full">{{ ucfirst($recette->categorie->nom) }}</span>
+                        <span class="bg-gray-100 text-gray-600 text-sm px-3 py-1 rounded-full flex items-center">
                             <i class="ri-time-line mr-1"></i> {{ $recette->duree }} min
                         </span>
                     </div>
@@ -51,12 +51,10 @@
                             <span class="text-sm text-gray-600">Par {{ $recette->nom }}</span>
                         </div>
                         <button onclick="showRecipeDetails(
-                            '{{ $recette->titre }}',
-                            '{{ $recette->duree }}',
-                            '{{ $recette->portions }}',
-                            '{{ $recette->difficulte }}',
-                            '{{ $recette->ingredient }}',
-                            '{{ $recette->instructions }}'
+    '{{ addslashes($recette->titre) }}',
+    '{{ $recette->duree }}',
+    '{{ addslashes($recette->ingredient) }}',
+    '{{ addslashes($recette->instructions) }}'
                         )" class="rounded-lg bg-black text-white px-4 py-2 text-sm font-medium hover:bg-purple-900 flex items-center">
                             <i class="ri-eye-line mr-2"></i> Voir la recette
                         </button>
@@ -92,24 +90,16 @@
         </div>
 
         <div class="grid grid-cols-2 gap-8">
-            <!-- Ingrédients -->
-    <div>
-        <h4 class="font-semibold mb-4 text-lg">Ingrédients</h4>
-        <ul class="list-none space-y-2 text-gray-600">
-            @foreach(explode(',', $recette->ingredient) as $ingredient)
-                <li>{{ trim($ingredient) }}</li>
-            @endforeach
-        </ul>
-    </div>
+            <!-- Ingredients -->
+            <div>
+                <h4 class="font-semibold mb-4 text-lg">Ingrédients</h4>
+                <ul id="recipeIngredients" class="list-none space-y-2 text-gray-600"></ul>
+            </div>
             <!-- Instructions -->
-    <div>
-        <h4 class="font-semibold mb-4 text-lg">Instructions</h4>
-        <ol class="list-decimal list-inside space-y-2 text-gray-600">
-            @foreach(explode(',', $recette->instructions) as $index => $instruction)
-                <li>{{ trim($instruction) }}</li>
-            @endforeach
-        </ol>
-    </div>
+            <div>
+                <h4 class="font-semibold mb-4 text-lg">Instructions</h4>
+                <ol id="recipeInstructions" class="list-decimal list-inside space-y-2 text-gray-600"></ol>
+            </div>
         </div>
 
         <!-- Comments Section -->
@@ -156,7 +146,7 @@
         <div class="flex justify-between items-center mb-6">
             <h3 class="text-2xl font-bold text-gray-900">Ajouter une recette</h3>
             <button onclick="document.getElementById('addRecipeModal').classList.add('hidden')"
-                    class="text-gray-500 hover:text-gray-700">
+                class="text-gray-500 hover:text-gray-700">
                 <i class="ri-close-line text-2xl"></i>
             </button>
         </div>
@@ -168,22 +158,22 @@
             <div>
                 <label class="block text-sm font-medium text-gray-700">Votre Nom</label>
                 <input type="text" name="nom" required
-                       class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-purple-900 focus:border-purple-900">
+                    class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-purple-900 focus:border-purple-900">
             </div>
 
             <div>
                 <label class="block text-sm font-medium text-gray-700">Titre de la recette</label>
                 <input type="text" name="titre" required
-                       class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-purple-900 focus:border-purple-900">
+                    class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-purple-900 focus:border-purple-900">
             </div>
 
             <div>
                 <label class="block text-sm font-medium text-gray-700">Catégorie</label>
                 <select name="categorie_id" required
-                        class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-purple-900 focus:border-purple-900">
+                    class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-purple-900 focus:border-purple-900">
                     <option value="">Sélectionner une catégorie</option>
                     @foreach($categories as $cat)
-                        <option value="{{ $cat->id }}">{{ $cat->nom }}</option>
+                    <option value="{{ $cat->id }}">{{ $cat->nom }}</option>
                     @endforeach
                 </select>
             </div>
@@ -191,36 +181,36 @@
             <div>
                 <label class="block text-sm font-medium text-gray-700">Temps de préparation (minutes)</label>
                 <input type="number" name="duree" required min="1"
-                       class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-purple-900 focus:border-purple-900">
+                    class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-purple-900 focus:border-purple-900">
             </div>
 
             <div>
                 <label class="block text-sm font-medium text-gray-700">Description</label>
                 <textarea name="description" required
-                          class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-purple-900 focus:border-purple-900"></textarea>
+                    class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-purple-900 focus:border-purple-900"></textarea>
             </div>
 
             <div>
                 <label class="block text-sm font-medium text-gray-700">Ingrédients (séparés par une virgule)</label>
                 <textarea name="ingredient" required
-                          class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-purple-900 focus:border-purple-900"></textarea>
+                    class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-purple-900 focus:border-purple-900"></textarea>
             </div>
 
             <div>
                 <label class="block text-sm font-medium text-gray-700">Instructions (séparées par une virgule)</label>
                 <textarea name="instructions" required
-                          class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-purple-900 focus:border-purple-900"></textarea>
+                    class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-purple-900 focus:border-purple-900"></textarea>
             </div>
 
             <div>
                 <label class="block text-sm font-medium text-gray-700">URL de la photo</label>
                 <input type="url" name="image_url" required
-                       class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-purple-900 focus:border-purple-900">
+                    class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-purple-900 focus:border-purple-900">
             </div>
 
             <div class="flex justify-end space-x-4">
                 <button type="button" onclick="document.getElementById('addRecipeModal').classList.add('hidden')"
-                        class="rounded-lg px-6 py-2 border border-gray-300 text-black hover:bg-gray-50">
+                    class="rounded-lg px-6 py-2 border border-gray-300 text-black hover:bg-gray-50">
                     Annuler
                 </button>
                 <button type="submit" class="rounded-lg bg-black text-white px-4 py-2 hover:bg-purple-900">
@@ -257,22 +247,24 @@
 </div>
 
 <script>
-    function showRecipeDetails(title, time, portions, difficulty, ingredient, instructions) {
+    function showRecipeDetails(title, time, ingredients, instructions) {
         document.getElementById("recipeTitle").textContent = title;
         document.getElementById("recipeTime").textContent = time;
-        document.getElementById("recipePortions").textContent = portions;
-        document.getElementById("recipeDifficulty").textContent = difficulty;
 
         let ingredientList = document.getElementById("recipeIngredients");
+        let instructionList = document.getElementById("recipeInstructions");
+
         ingredientList.innerHTML = "";
-        ingredient.split(",").forEach(item => {
+        instructionList.innerHTML = "";
+
+        // Populate Ingredients
+        ingredients.split(",").forEach(item => {
             let li = document.createElement("li");
             li.textContent = item.trim();
             ingredientList.appendChild(li);
         });
 
-        let instructionList = document.getElementById("recipeInstructions");
-        instructionList.innerHTML = "";
+        // Populate Instructions
         instructions.split(",").forEach(step => {
             let li = document.createElement("li");
             li.textContent = step.trim();
@@ -287,6 +279,7 @@
         document.getElementById("recipeDetailsModal").classList.add("hidden");
         document.body.style.overflow = "auto";
     }
+
 
     function addRecipeComment(event) {
         event.preventDefault();
