@@ -30,6 +30,8 @@ Route::post('/temoignages', [TemoignageController::class, 'store'])->name('temoi
 
 
 Route::get('/recettes', [RecetteController::class, 'index'])->name('recettes.index');
+Route::post('/recettes', [RecetteController::class, 'store'])->name('recettes.store');
+
 // Route::get('/recettes/{id}', [RecetteController::class, 'show'])->name('recettes.show');
 
 Route::post('/commentaires/store', [CommentaireController::class, 'store'])->name('commentaires.store');
