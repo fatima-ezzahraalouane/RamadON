@@ -109,20 +109,6 @@
 </script>
 @endif
 
-
-<!-- Comment Modal -->
-
-<!-- Success Popup -->
-<!-- <div id="successPopup" class="hidden fixed inset-0 flex items-center justify-center z-50">
-    <div class="bg-gradient-to-r from-black to-purple-800 text-white px-8 py-6 rounded-lg shadow-2xl animate-fadeIn transform scale-95">
-        <h3 class="text-2xl font-bold">Commentaire Ajouté! 🎉🌙</h3>
-        <p class="mt-2 text-lg">Votre commentaire a été publié avec succès.</p>
-    </div>
-</div> -->
-
-
-
-
 <!-- Tailwind Animations -->
 <style>
     @keyframes fadeIn {

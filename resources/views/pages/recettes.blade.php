@@ -50,12 +50,8 @@
                             <img src="https://intranet.youcode.ma/storage/users/profile/1384-1728486655.JPG" class="w-8 h-8 rounded-full" alt="Auteur">
                             <span class="text-sm text-gray-600">Par {{ $recette->nom }}</span>
                         </div>
-                        <button onclick="showRecipeDetails(
-                            '{{ addslashes($recette->titre) }}',
-                            '{{ $recette->duree }}',
-                            '{{ addslashes($recette->ingredient) }}',
-                            '{{ addslashes($recette->instructions) }}'
-                        )" class="rounded-lg bg-black text-white px-4 py-2 text-sm font-medium hover:bg-purple-900 flex items-center">
+                        <button onclick="document.getElementById('recipeDetailsModal-{{ $recette->id }}').classList.remove('hidden')"
+                            class="rounded-lg bg-black text-white px-4 py-2 text-sm font-medium hover:bg-purple-900 flex items-center">
                             <i class="ri-eye-line mr-2"></i> Voir la recette
                         </button>
                     </div>
@@ -120,7 +116,7 @@
                 @if($recette->commentaires && $recette->commentaires->count() > 0)
                 @foreach($recette->commentaires as $comment)
                 <div class="flex items-start space-x-4">
-                    <img src="https://public.readdy.ai/ai/img_res/placeholder.jpg" class="w-10 h-10 rounded-full" alt="User">
+                    <img src="https://public.readdy.ai/ai/img_res/7981d1aa5d3fb0443327a7dbfa075c17.jpg" class="w-10 h-10 rounded-full" alt="User">
                     <div>
                         <div class="flex items-center">
                             <span class="font-medium">{{ $comment->nom }}</span>
