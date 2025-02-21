@@ -30,14 +30,16 @@ Un espace dédié permet aux utilisateurs de **partager leurs recettes**, class�
 - 🌇 **Iftar**
 - 🍰 **Desserts**
 
-> 🔎 **Filtrage** : Un système de **filtrage** par catégorie est mis en place pour faciliter la recherche des recettes.
+>* 🔎 **Filtrage** : Un système de **filtrage** par catégorie est mis en place pour faciliter la recherche des recettes.
 
 ### 💬 Commentaires
 Les utilisateurs peuvent **interagir** en commentant les publications et en partageant leurs impressions. 🗣️
 
 ### 📊 Statistiques
 Une section dédiée aux **statistiques** permet d'afficher :
-- 📌 Le **nombre total de publications**
+- 📌 Le **nombre total de recettes partagées**
+- ✨ Le **nombre total d'expériences partagées**
+- 💬 Le **nombre total de commentaires**
 - 🌟 Les **recettes les plus populaires**
 
 ---
