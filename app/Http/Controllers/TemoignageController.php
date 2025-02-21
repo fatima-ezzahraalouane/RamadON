@@ -28,17 +28,6 @@ class TemoignageController extends Controller
 
         Temoignage::create($request->all());
 
-
-        // $temoignage = Temoignage::create($request->all());
-        // return response()->json($temoignage, status: 201);
-
-        // Temoignage::create([
-        //     'nom' => $request->nom,
-        //     'titre' => $request->titre,
-        //     'contenu' => $request->contenu,
-        //     'image_url' => $request->image_url,
-        // ]);
-
         return redirect()->back()->with('success', 'Votre expérience a été ajoutée avec succès !');
     }
 }
