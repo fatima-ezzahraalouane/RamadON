@@ -13,11 +13,18 @@
         </div>
 
         <div class="flex justify-center mb-8 space-x-4">
-            <button class="rounded-lg px-4 py-2 bg-black text-white font-medium hover:bg-purple-900" data-category="tous">Tous</button>
-            <button class="rounded-lg px-4 py-2 bg-white text-gray-700 font-medium hover:bg-gray-200" data-category="iftar">Iftar</button>
-            <button class="rounded-lg px-4 py-2 bg-white text-gray-700 font-medium hover:bg-gray-200" data-category="suhoor">Suhoor</button>
-            <button class="rounded-lg px-4 py-2 bg-white text-gray-700 font-medium hover:bg-gray-200" data-category="desserts">Desserts</button>
-        </div>
+    <a href="{{ route('recettes.index', ['categorie' => 'tous']) }}"
+       class="rounded-lg px-4 py-2 {{ request('categorie') == 'tous' || !request('categorie') ? 'bg-black text-white' : 'bg-white text-gray-700' }} font-medium hover:bg-purple-900">
+       Tous
+    </a>
+
+    @foreach($categories as $cat)
+        <a href="{{ route('recettes.index', ['categorie' => $cat->nom]) }}"
+           class="rounded-lg px-4 py-2 {{ request('categorie') == $cat->nom ? 'bg-black text-white' : 'bg-white text-gray-700' }} font-medium hover:bg-purple-900">
+           {{ ucfirst($cat->nom) }}
+        </a>
+    @endforeach
+</div>
 
         <div class="grid grid-cols-3 gap-8" id="recipes-grid">
             @foreach($recettes as $recette)
@@ -30,8 +37,8 @@
                 </div>
                 <div class="p-6">
                     <div class="flex items-center space-x-2 mb-3">
-                        <span class="bg-black bg-opacity-10 text-primary text-sm px-3 py-1 rounded-full">{{ ucfirst($recette->categorie) }}</span>
-                        <span class="bg-gray-100 text-gray-600 text-sm px-3 py-1 rounded-full flex items-center">
+                    <span class="bg-purple-900 text-white text-sm px-3 py-1 rounded-full">{{ ucfirst($recette->categorie->nom) }}</span>
+                    <span class="bg-gray-100 text-gray-600 text-sm px-3 py-1 rounded-full flex items-center">
                             <i class="ri-time-line mr-1"></i> {{ $recette->duree }} min
                         </span>
                     </div>
@@ -47,7 +54,7 @@
                             '{{ $recette->duree }}',
                             '{{ $recette->portions }}',
                             '{{ $recette->difficulte }}',
-                            '{{ $recette->ingredients }}',
+                            '{{ $recette->ingredient }}',
                             '{{ $recette->instructions }}'
                         )" class="rounded-lg bg-black text-white px-4 py-2 text-sm font-medium hover:bg-purple-900 flex items-center">
                             <i class="ri-eye-line mr-2"></i> Voir la recette
@@ -71,10 +78,10 @@
                         <i class="ri-time-line mr-1"></i> <span id="recipeTime"></span> min
                     </span>
                     <span class="flex items-center">
-                        <i class="ri-user-line mr-1"></i> <span id="recipePortions"></span> personnes
+                        <i class="ri-user-line mr-1"></i> <span id="recipePortions"></span> 6 personnes
                     </span>
                     <span class="flex items-center">
-                        <i class="ri-fire-line mr-1"></i> <span id="recipeDifficulty"></span>
+                        <i class="ri-fire-line mr-1"></i> <span id="recipeDifficulty"></span> Moyen
                     </span>
                 </div>
             </div>
@@ -141,7 +148,7 @@
 </div>
 
 <script>
-    function showRecipeDetails(title, time, portions, difficulty, ingredients, instructions) {
+    function showRecipeDetails(title, time, portions, difficulty, ingredient, instructions) {
         document.getElementById("recipeTitle").textContent = title;
         document.getElementById("recipeTime").textContent = time;
         document.getElementById("recipePortions").textContent = portions;
@@ -149,7 +156,7 @@
 
         let ingredientList = document.getElementById("recipeIngredients");
         ingredientList.innerHTML = "";
-        ingredients.split(",").forEach(item => {
+        ingredient.split(",").forEach(item => {
             let li = document.createElement("li");
             li.textContent = item.trim();
             ingredientList.appendChild(li);
