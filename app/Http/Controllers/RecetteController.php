@@ -25,6 +25,24 @@ class RecetteController extends Controller
         return view('pages.recettes', compact('recettes', 'categories', 'categorie'));
     }
 
+    public function store(Request $request)
+    {
+        $request->validate([
+            'nom' => 'required|string|max:255',
+        'titre' => 'required|string|max:255',
+        'categorie_id' => 'required|exists:categories,id',
+        'duree' => 'required|integer|min:1',
+        'description' => 'required|string',
+        'ingredient' => 'nullable|string',
+        'instructions' => 'nullable|string',
+        'image_url' => 'required|url|max:255',
+        ]);
+
+        Recette::create($request->all());
+
+        return redirect()->route('recettes.index')->with('success', 'Recette ajoutée avec succès !');
+    }
+
     // public function show($id) {
     //     $recette = Recette::findOrFail($id);
     //     return view('pages.recette_detail', compact('recette'));
