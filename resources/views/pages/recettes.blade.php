@@ -51,10 +51,10 @@
                             <span class="text-sm text-gray-600">Par {{ $recette->nom }}</span>
                         </div>
                         <button onclick="showRecipeDetails(
-    '{{ addslashes($recette->titre) }}',
-    '{{ $recette->duree }}',
-    '{{ addslashes($recette->ingredient) }}',
-    '{{ addslashes($recette->instructions) }}'
+                            '{{ addslashes($recette->titre) }}',
+                            '{{ $recette->duree }}',
+                            '{{ addslashes($recette->ingredient) }}',
+                            '{{ addslashes($recette->instructions) }}'
                         )" class="rounded-lg bg-black text-white px-4 py-2 text-sm font-medium hover:bg-purple-900 flex items-center">
                             <i class="ri-eye-line mr-2"></i> Voir la recette
                         </button>
@@ -67,24 +67,27 @@
 </section>
 
 <!-- Recipe Details Modal -->
-<div id="recipeDetailsModal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center">
-    <div class="bg-white rounded-lg p-6 max-w-xl w-full mx-4 shadow-xl">
+@foreach($recettes as $recette)
+
+<div id="recipeDetailsModal-{{ $recette->id }}" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center">
+    <div class="bg-white rounded-lg p-6 max-w-xl w-full mx-4 shadow-xl max-h-[80vh] overflow-y-auto [&::-webkit-scrollbar]:hidden">
         <div class="flex justify-between items-start mb-6">
             <div>
-                <h3 id="recipeTitle" class="text-2xl font-bold mb-2"></h3>
+                <h3 class="text-2xl font-bold mb-2">{{ $recette->titre }}</h3>
                 <div class="flex items-center space-x-4 text-sm text-gray-600">
                     <span class="flex items-center">
-                        <i class="ri-time-line mr-1"></i> <span id="recipeTime"></span> min
+                        <i class="ri-time-line mr-1"></i> {{ $recette->duree }} min
                     </span>
                     <span class="flex items-center">
-                        <i class="ri-user-line mr-1"></i> <span id="recipePortions"></span> 6 personnes
+                        <i class="ri-user-line mr-1"></i> 6 personnes
                     </span>
                     <span class="flex items-center">
-                        <i class="ri-fire-line mr-1"></i> <span id="recipeDifficulty"></span> Moyen
+                        <i class="ri-fire-line mr-1"></i> Moyen
                     </span>
                 </div>
             </div>
-            <button onclick="hideRecipeDetails()" class="text-gray-500 hover:text-gray-700">
+            <button onclick="document.getElementById('recipeDetailsModal-{{ $recette->id }}').classList.add('hidden')"
+                class="text-gray-500 hover:text-gray-700">
                 <i class="ri-close-line text-2xl"></i>
             </button>
         </div>
@@ -93,52 +96,70 @@
             <!-- Ingredients -->
             <div>
                 <h4 class="font-semibold mb-4 text-lg">Ingrédients</h4>
-                <ul id="recipeIngredients" class="list-none space-y-2 text-gray-600"></ul>
+                <ul class="list-none space-y-2 text-gray-600">
+                    @foreach(explode(',', $recette->ingredient) as $ingredient)
+                    <li>{{ trim($ingredient) }}</li>
+                    @endforeach
+                </ul>
             </div>
             <!-- Instructions -->
             <div>
                 <h4 class="font-semibold mb-4 text-lg">Instructions</h4>
-                <ol id="recipeInstructions" class="list-decimal list-inside space-y-2 text-gray-600"></ol>
+                <ol class="list-decimal list-inside space-y-2 text-gray-600">
+                    @foreach(explode(',', $recette->instructions) as $index => $instruction)
+                    <li>{{ trim($instruction) }}</li>
+                    @endforeach
+                </ol>
             </div>
         </div>
 
         <!-- Comments Section -->
         <div class="mt-8">
             <h4 class="font-semibold mb-4">Commentaires</h4>
-            <div id="recipeComments" class="space-y-4 mb-6"></div>
-
-            <!-- Example Comment -->
-            <div class="flex items-start space-x-4">
-                <img src="https://public.readdy.ai/ai/img_res/6c73c89fc2ffcc767a430badfa2b9b1b.jpg" class="w-10 h-10 rounded-full" alt="User">
-                <div>
-                    <div class="flex items-center">
-                        <span class="font-medium">Sophie Martin</span>
-                        <span class="text-gray-500 text-sm ml-2">Il y a 3 jours</span>
+            <div class="space-y-4 mb-6 max-h-40 overflow-y-auto [&::-webkit-scrollbar]:hidden">
+                @if($recette->commentaires && $recette->commentaires->count() > 0)
+                @foreach($recette->commentaires as $comment)
+                <div class="flex items-start space-x-4">
+                    <img src="https://public.readdy.ai/ai/img_res/placeholder.jpg" class="w-10 h-10 rounded-full" alt="User">
+                    <div>
+                        <div class="flex items-center">
+                            <span class="font-medium">{{ $comment->nom }}</span>
+                        </div>
+                        <p class="text-gray-600 mt-1">{{ $comment->contenu }}</p>
                     </div>
-                    <p class="text-gray-600 mt-1">Excellente recette ! Je l'ai essayée hier, c'était délicieux.</p>
                 </div>
+                @endforeach
+                @else
+                <p class="text-gray-500">Aucun commentaire pour cette recette.</p>
+                @endif
             </div>
-        </div>
 
-        <!-- Comment Form -->
-        <form class="space-y-4" onsubmit="addRecipeComment(event)">
-            <div>
-                <input type="text" id="commentName" placeholder="Votre nom" class="w-full px-3 py-2 text-sm border rounded-lg focus:ring-2 focus:ring-primary focus:border-primary" required>
-            </div>
-            <div>
-                <textarea id="commentText" placeholder="Votre commentaire" class="w-full px-3 py-2 text-sm border rounded-lg focus:ring-2 focus:ring-primary focus:border-primary h-20" required></textarea>
-            </div>
-            <div class="flex justify-end space-x-4">
-                <button type="button" onclick="hideRecipeDetails()" class="rounded-lg px-6 py-2 border border-gray-300 text-gray-700 hover:bg-gray-50">
-                    Annuler
-                </button>
-                <button type="submit" class="rounded-lg bg-black text-white px-4 py-2 hover:bg-purple-900">
-                    Publier le commentaire
-                </button>
-            </div>
-        </form>
+            <!-- Comment Form -->
+            <form action="{{ route('commentaires.store') }}" method="POST" class="space-y-4">
+                @csrf
+                <input type="hidden" name="recette_id" value="{{ $recette->id }}">
+                <div>
+                    <input type="text" name="nom" placeholder="Votre nom" required
+                        class="w-full px-3 py-2 text-sm border rounded-lg focus:ring-2 focus:ring-primary focus:border-primary">
+                </div>
+                <div>
+                    <textarea name="contenu" placeholder="Votre commentaire" required
+                        class="w-full px-3 py-2 text-sm border rounded-lg focus:ring-2 focus:ring-primary focus:border-primary h-20"></textarea>
+                </div>
+                <div class="flex justify-end space-x-4">
+                    <button type="button" onclick="document.getElementById('recipeDetailsModal-{{ $recette->id }}').classList.add('hidden')"
+                        class="rounded-lg px-6 py-2 border border-gray-300 text-black hover:bg-gray-50">
+                        Annuler
+                    </button>
+                    <button type="submit" class="rounded-lg bg-black text-white px-4 py-2 hover:bg-purple-900">
+                        Publier
+                    </button>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
+@endforeach
 
 <!-- Modal d'ajout de recette -->
 <div id="addRecipeModal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center">
@@ -238,87 +259,21 @@
 @endif
 
 
-<!-- Success Popup -->
-<div id="successPopup" class="hidden fixed inset-0 flex items-center justify-center z-50">
-    <div class="bg-gradient-to-r from-black to-purple-800 text-white px-8 py-6 rounded-lg shadow-2xl animate-fadeIn transform scale-95">
+<!-- Success Popup Comments -->
+@if(session('success'))
+<div id="successPopup" class="fixed inset-0 flex items-center justify-center z-50">
+    <div class="bg-gradient-to-r from-black to-purple-800 text-white px-8 py-6 rounded-lg shadow-2xl">
         <h3 class="text-2xl font-bold">Commentaire Publié! 🎉</h3>
-        <p class="mt-2 text-lg">Votre commentaire a été ajouté avec succès.</p>
+        <p class="mt-2 text-lg">{{ session('success') }}</p>
     </div>
 </div>
 
 <script>
-    function showRecipeDetails(title, time, ingredients, instructions) {
-        document.getElementById("recipeTitle").textContent = title;
-        document.getElementById("recipeTime").textContent = time;
-
-        let ingredientList = document.getElementById("recipeIngredients");
-        let instructionList = document.getElementById("recipeInstructions");
-
-        ingredientList.innerHTML = "";
-        instructionList.innerHTML = "";
-
-        // Populate Ingredients
-        ingredients.split(",").forEach(item => {
-            let li = document.createElement("li");
-            li.textContent = item.trim();
-            ingredientList.appendChild(li);
-        });
-
-        // Populate Instructions
-        instructions.split(",").forEach(step => {
-            let li = document.createElement("li");
-            li.textContent = step.trim();
-            instructionList.appendChild(li);
-        });
-
-        document.getElementById("recipeDetailsModal").classList.remove("hidden");
-        document.body.style.overflow = "hidden";
-    }
-
-    function hideRecipeDetails() {
-        document.getElementById("recipeDetailsModal").classList.add("hidden");
-        document.body.style.overflow = "auto";
-    }
-
-
-    function addRecipeComment(event) {
-        event.preventDefault();
-
-        let name = document.getElementById("commentName").value;
-        let comment = document.getElementById("commentText").value;
-
-        let newCommentHTML = `
-            <div class="flex items-start space-x-4 opacity-0 transform translate-y-4">
-                <img src="https://public.readdy.ai/ai/img_res/placeholder.jpg" class="w-10 h-10 rounded-full" alt="User">
-                <div>
-                    <div class="flex items-center">
-                        <span class="font-medium">${name}</span>
-                        <span class="text-gray-500 text-sm ml-2">À l'instant</span>
-                    </div>
-                    <p class="text-gray-600 mt-1">${comment}</p>
-                </div>
-            </div>
-        `;
-
-        document.getElementById("recipeComments").innerHTML += newCommentHTML;
-
-        // Show pop-up success message
-        const successPopup = document.getElementById("successPopup");
-        successPopup.classList.remove("hidden");
-        successPopup.classList.add("animate-scaleIn");
-
-        // Hide after 3 seconds
-        setTimeout(() => {
-            successPopup.classList.add("hidden");
-            successPopup.classList.remove("animate-scaleIn");
-        }, 3000);
-
-        // Close the form & reset fields
-        hideRecipeDetails();
-        document.getElementById("commentName").value = "";
-        document.getElementById("commentText").value = "";
-    }
+    setTimeout(() => {
+        document.getElementById('successPopup').classList.add('hidden');
+    }, 3000);
 </script>
+@endif
 
 <!-- Tailwind Animations -->
 <style>

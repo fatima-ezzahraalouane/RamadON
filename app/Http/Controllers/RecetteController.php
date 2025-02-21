@@ -11,19 +11,20 @@ class RecetteController extends Controller
     public function index(Request $request) 
     {
         $categorie = $request->input('categorie');
-
+    
         if ($categorie && $categorie !== 'tous') {
-            $recettes = Recette::whereHas('categorie', function ($query) use ($categorie) {
+            $recettes = Recette::with('commentaires')->whereHas('categorie', function ($query) use ($categorie) {
                 $query->where('nom', $categorie);
             })->get();
         } else {
-            $recettes = Recette::all();
+            $recettes = Recette::with('commentaires')->get();
         }
-
+    
         $categories = Categorie::all();
-
+    
         return view('pages.recettes', compact('recettes', 'categories', 'categorie'));
     }
+    
 
     public function store(Request $request)
     {

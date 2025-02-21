@@ -16,6 +16,6 @@ class Recette extends Model
     }
 
     public function commentaires() {
-        return $this->hasMany(Commentaire::class);
+        return $this->hasMany(Commentaire::class, 'recette_id');
     }
 }

@@ -39,6 +39,6 @@ class TemoignageController extends Controller
         //     'image_url' => $request->image_url,
         // ]);
 
-        return redirect()->back()->with('success', 'Votre expérience a été ajoutée avec succès.');
+        return redirect()->back()->with('success', 'Votre expérience a été ajoutée avec succès !');
     }
 }
