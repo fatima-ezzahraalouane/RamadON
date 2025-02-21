@@ -24,9 +24,10 @@
                                     <span>24</span>
                                 </button>
                                 <!-- Comment Button -->
-                                <button onclick="showCommentForm()" class="flex items-center text-gray-500 hover:text-primary">
-                                    <i class="ri-chat-1-line mr-1"></i>
-                                    <span>12</span>
+                                <button class="comment-btn flex items-center text-black hover:text-primary" 
+                                data-id="{{ $temoignage->id }}">
+                                <i class="ri-chat-1-line mr-1"></i>
+                                    <span id="comment-count-{{ $temoignage->id }}">{{ $temoignage->commentaires->count() }}</span>
                                 </button>
                             </div>
                         </div>
@@ -46,8 +47,8 @@
                 <i class="ri-close-line text-2xl"></i>
             </button>
         </div>
-        <div class="space-y-4 mb-6">
-            <!-- Example Comment -->
+                    <!-- Example Comment -->
+        <!-- <div class="space-y-4 mb-6">
             <div class="flex items-start space-x-4">
                 <img src="https://public.readdy.ai/ai/img_res/7981d1aa5d3fb0443327a7dbfa075c17.jpg" class="w-10 h-10 rounded-full" alt="User">
                 <div>
@@ -58,13 +59,22 @@
                     <p class="text-gray-600 mt-1">Merci pour ce partage ! C'est vraiment inspirant.</p>
                 </div>
             </div>
+        </div> -->
+
+        <!-- Scrollable Comments Section -->
+        <div id="commentList" class="space-y-4 mb-6 max-h-64 overflow-y-auto [&::-webkit-scrollbar]:hidden">
+            <!-- Comments will be inserted here dynamically -->
         </div>
-        <form id="commentForm" class="space-y-4">
+
+        <form action="{{ route('commentaires.store') }}" method="POST" class="space-y-4">
+            @csrf
+            <input type="hidden" id="temoignage_id" name="temoignage_id">
+
             <div>
-                <input type="text" placeholder="Votre nom" required class="w-full px-3 py-2 text-sm border rounded-lg focus:ring-2 focus:ring-primary focus:border-primary">
+                <input type="text" name="nom" placeholder="Votre nom" required class="w-full px-3 py-2 text-sm border rounded-lg focus:ring-2 focus:ring-primary focus:border-primary">
             </div>
             <div>
-                <textarea placeholder="Votre commentaire" required class="w-full px-3 py-2 text-sm border rounded-lg focus:ring-2 focus:ring-primary focus:border-primary h-20 resize-none"></textarea>
+                <textarea name="contenu" placeholder="Votre commentaire" required class="w-full px-3 py-2 text-sm border rounded-lg focus:ring-2 focus:ring-primary focus:border-primary h-20 resize-none"></textarea>
             </div>
             <div class="flex justify-end space-x-4">
                 <button type="button" onclick="hideCommentForm()" class="rounded-lg px-6 py-2 border border-gray-300 text-black hover:bg-gray-50">
@@ -79,39 +89,178 @@
 </div>
 
 <!-- Success Popup -->
-<div id="successPopup" class="hidden fixed inset-0 flex items-center justify-center z-50">
+<!-- <div id="successPopup" class="hidden fixed inset-0 flex items-center justify-center z-50">
     <div class="bg-gradient-to-r from-black to-purple-800 text-white px-8 py-6 rounded-lg shadow-2xl animate-fadeIn transform scale-95">
         <h3 class="text-2xl font-bold">Commentaire Ajouté! 🎉🌙</h3>
         <p class="mt-2 text-lg">Votre commentaire a été publié avec succès.</p>
     </div>
-</div>
+</div> -->
+
+
 
 <script>
-    function showCommentForm() {
-        document.getElementById("commentModal").classList.remove("hidden");
-        document.body.style.overflow = "hidden";
-    }
-
-    function hideCommentForm() {
-        document.getElementById("commentModal").classList.add("hidden");
-        document.body.style.overflow = "auto";
-    }
-
-    document.getElementById("commentForm").addEventListener("submit", function(e) {
-        e.preventDefault();
-        hideCommentForm();
-
-        // Show the pop-up message
-        const successPopup = document.getElementById("successPopup");
-        successPopup.classList.remove("hidden");
-        successPopup.classList.add("animate-scaleIn");
-
-        // Hide after 3 seconds
+    document.addEventListener("DOMContentLoaded", function () {
+    // Check for success popup on page load (for redirects)
+    if (document.getElementById("successPopup")) {
         setTimeout(() => {
-            successPopup.classList.add("hidden");
-            successPopup.classList.remove("animate-scaleIn");
+            document.getElementById("successPopup").classList.add("hidden");
         }, 3000);
+    }
+
+    // Attach event listener to all comment buttons
+    document.querySelectorAll(".comment-btn").forEach(button => {
+        button.addEventListener("click", function () {
+            let temoignageId = this.getAttribute("data-id");
+            showCommentForm(temoignageId);
+        });
     });
+
+    // Handle comment form submission with AJAX
+    document.querySelector("form").addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        let formData = new FormData(this);
+        let temoignageId = formData.get("temoignage_id");
+
+        fetch(this.action, {
+            method: "POST",
+            body: formData,
+            headers: {
+                "X-CSRF-TOKEN": document.querySelector('input[name="_token"]').value,
+                "Accept": "application/json",
+                "X-Requested-With": "XMLHttpRequest"
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // Clear the form fields
+                document.querySelector('input[name="nom"]').value = '';
+                document.querySelector('textarea[name="contenu"]').value = '';
+                
+                // Close the modal
+                hideCommentForm();
+                
+                // Update the comment count
+                let commentCount = document.getElementById(`comment-count-${temoignageId}`);
+                commentCount.textContent = parseInt(commentCount.textContent) + 1;
+
+                // Create and show success popup
+                createSuccessPopup(data.message);
+            }else {
+            // ❌ If there's an error
+            createErrorPopup("Une erreur s'est produite lors de l'envoi du commentaire.");
+        }
+        })
+        .catch(error => {
+            console.error("Erreur lors de l'envoi du commentaire:", error);
+            createErrorPopup("Une erreur s'est produite lors de l'envoi du commentaire.");
+        });
+    });
+});
+
+function createSuccessPopup(message) {
+    // Remove existing popup if any
+    const existingPopup = document.getElementById("successPopup");
+    if (existingPopup) {
+        existingPopup.remove();
+    }
+    
+    // Create new popup
+    const successPopup = document.createElement('div');
+    successPopup.id = 'successPopup';
+    successPopup.className = 'fixed inset-0 flex items-center justify-center z-50';
+    successPopup.innerHTML = `
+        <div class="bg-gradient-to-r from-black to-purple-800 text-white px-8 py-6 rounded-lg shadow-2xl animate-fadeIn transform scale-95">
+            <h3 class="text-2xl font-bold">Commentaire Ajouté! 🎉🌙</h3>
+            <p class="mt-2 text-lg">${message}</p>
+        </div>
+    `;
+    
+    // Add to document
+    document.body.appendChild(successPopup);
+    
+    // Remove after 3 seconds
+    setTimeout(() => {
+        successPopup.classList.add('opacity-0');
+        successPopup.style.transition = 'opacity 0.5s ease';
+        setTimeout(() => {
+            successPopup.remove();
+        }, 500);
+    }, 3000);
+}
+
+function createErrorPopup(message) {
+    const errorPopup = document.createElement('div');
+    errorPopup.id = 'errorPopup';
+    errorPopup.className = 'fixed inset-0 flex items-center justify-center z-50';
+    errorPopup.innerHTML = `
+        <div class="bg-gradient-to-r from-red-600 to-red-800 text-white px-8 py-6 rounded-lg shadow-2xl animate-fadeIn transform scale-95">
+            <h3 class="text-2xl font-bold">Erreur</h3>
+            <p class="mt-2 text-lg">${message}</p>
+        </div>
+    `;
+    
+    document.body.appendChild(errorPopup);
+    
+    setTimeout(() => {
+        errorPopup.classList.add('opacity-0');
+        errorPopup.style.transition = 'opacity 0.5s ease';
+        setTimeout(() => {
+            errorPopup.remove();
+        }, 500);
+    }, 3000);
+}
+
+function showCommentForm(temoignageId) {
+    document.getElementById("commentModal").classList.remove("hidden");
+    document.body.style.overflow = "hidden";
+    document.getElementById("temoignage_id").value = temoignageId;
+
+    // Fetch comments from Laravel route
+    fetch(`/commentaires/${temoignageId}`)
+        .then(response => response.json())
+        .then(data => {
+            let commentList = document.getElementById("commentList");
+            commentList.innerHTML = "";
+
+            if (data.length === 0) {
+                commentList.innerHTML = `<p class="text-gray-500 text-center py-4">Aucun commentaire pour le moment. Soyez le premier à commenter!</p>`;
+                return;
+            }
+
+            data.forEach(comment => {
+                let formattedDate = new Date(comment.created_at).toLocaleDateString("fr-FR", {
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric"
+                });
+
+                commentList.innerHTML += `
+                    <div class="flex items-start space-x-4">
+                        <img src="https://public.readdy.ai/ai/img_res/7981d1aa5d3fb0443327a7dbfa075c17.jpg" class="w-10 h-10 rounded-full" alt="User">
+                        <div>
+                            <div class="flex items-center">
+                                <span class="font-medium">${comment.nom}</span>
+                                <span class="text-gray-500 text-sm ml-2">${formattedDate}</span>
+                            </div>
+                            <p class="text-gray-600 mt-1">${comment.contenu}</p>
+                        </div>
+                    </div>
+                `;
+            });
+
+            // Update comment count
+            document.getElementById(`comment-count-${temoignageId}`).textContent = data.length;
+        })
+        .catch(error => console.error("Error fetching comments:", error));
+}
+
+function hideCommentForm() {
+    document.getElementById("commentModal").classList.add("hidden");
+    document.body.style.overflow = "auto";
+}
+
 </script>
 
 <!-- Tailwind Animations -->
