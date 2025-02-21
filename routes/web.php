@@ -3,6 +3,7 @@ use App\Http\Controllers\CategorieController;
 use App\Http\Controllers\TemoignageController;
 use App\Http\Controllers\RecetteController;
 use App\Http\Controllers\CommentaireController;
+use App\Http\Controllers\StatistiqueController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -36,3 +37,5 @@ Route::post('/recettes', [RecetteController::class, 'store'])->name('recettes.st
 
 Route::post('/commentaires/store', [CommentaireController::class, 'store'])->name('commentaires.store');
 // Route::get('/commentaires/{temoignage}', [CommentaireController::class, 'getComments']);
+
+Route::get('/statistiques', [StatistiqueController::class, 'index'])->name('statistiques.index');
