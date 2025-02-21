@@ -1,3 +1,4 @@
+<!-- navbar -->
 <nav class="fixed top-0 left-0 right-0 bg-white shadow-sm z-50">
     <div class="max-w-7xl mx-auto px-4">
         <div class="flex justify-between items-center h-16">
