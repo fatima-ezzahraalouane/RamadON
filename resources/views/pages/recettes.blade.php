@@ -7,7 +7,8 @@
     <div class="max-w-7xl mx-auto px-4">
         <div class="flex justify-between items-center mb-8">
             <h2 class="text-3xl font-bold">Recettes Populaires</h2>
-            <button class="rounded-lg bg-black text-white px-6 py-3 font-medium hover:bg-purple-900 flex items-center gap-2">
+            <button onclick="document.getElementById('addRecipeModal').classList.remove('hidden')"
+            class="rounded-lg bg-black text-white px-6 py-3 font-medium hover:bg-purple-900 flex items-center gap-2">
                 <i class="ri-add-line"></i> Ajouter une recette
             </button>
         </div>
@@ -91,14 +92,24 @@
         </div>
 
         <div class="grid grid-cols-2 gap-8">
-            <div>
-                <h4 class="font-semibold mb-4">Ingrédients</h4>
-                <ul id="recipeIngredients" class="space-y-2 text-gray-600"></ul>
-            </div>
-            <div>
-                <h4 class="font-semibold mb-4">Instructions</h4>
-                <ol id="recipeInstructions" class="space-y-2 text-gray-600 list-decimal list-inside"></ol>
-            </div>
+            <!-- Ingrédients -->
+    <div>
+        <h4 class="font-semibold mb-4 text-lg">Ingrédients</h4>
+        <ul class="list-none space-y-2 text-gray-600">
+            @foreach(explode(',', $recette->ingredient) as $ingredient)
+                <li>{{ trim($ingredient) }}</li>
+            @endforeach
+        </ul>
+    </div>
+            <!-- Instructions -->
+    <div>
+        <h4 class="font-semibold mb-4 text-lg">Instructions</h4>
+        <ol class="list-decimal list-inside space-y-2 text-gray-600">
+            @foreach(explode(',', $recette->instructions) as $index => $instruction)
+                <li>{{ trim($instruction) }}</li>
+            @endforeach
+        </ol>
+    </div>
         </div>
 
         <!-- Comments Section -->
@@ -138,6 +149,104 @@
         </form>
     </div>
 </div>
+
+<!-- Modal d'ajout de recette -->
+<div id="addRecipeModal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center">
+    <div class="bg-white rounded-lg p-6 max-w-lg w-full mx-4 shadow-xl max-h-[80vh] overflow-y-auto [&::-webkit-scrollbar]:hidden">
+        <div class="flex justify-between items-center mb-6">
+            <h3 class="text-2xl font-bold text-gray-900">Ajouter une recette</h3>
+            <button onclick="document.getElementById('addRecipeModal').classList.add('hidden')"
+                    class="text-gray-500 hover:text-gray-700">
+                <i class="ri-close-line text-2xl"></i>
+            </button>
+        </div>
+
+        <!-- Formulaire -->
+        <form action="{{ route('recettes.store') }}" method="POST" class="space-y-4">
+            @csrf
+
+            <div>
+                <label class="block text-sm font-medium text-gray-700">Votre Nom</label>
+                <input type="text" name="nom" required
+                       class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-purple-900 focus:border-purple-900">
+            </div>
+
+            <div>
+                <label class="block text-sm font-medium text-gray-700">Titre de la recette</label>
+                <input type="text" name="titre" required
+                       class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-purple-900 focus:border-purple-900">
+            </div>
+
+            <div>
+                <label class="block text-sm font-medium text-gray-700">Catégorie</label>
+                <select name="categorie_id" required
+                        class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-purple-900 focus:border-purple-900">
+                    <option value="">Sélectionner une catégorie</option>
+                    @foreach($categories as $cat)
+                        <option value="{{ $cat->id }}">{{ $cat->nom }}</option>
+                    @endforeach
+                </select>
+            </div>
+
+            <div>
+                <label class="block text-sm font-medium text-gray-700">Temps de préparation (minutes)</label>
+                <input type="number" name="duree" required min="1"
+                       class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-purple-900 focus:border-purple-900">
+            </div>
+
+            <div>
+                <label class="block text-sm font-medium text-gray-700">Description</label>
+                <textarea name="description" required
+                          class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-purple-900 focus:border-purple-900"></textarea>
+            </div>
+
+            <div>
+                <label class="block text-sm font-medium text-gray-700">Ingrédients (séparés par une virgule)</label>
+                <textarea name="ingredient" required
+                          class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-purple-900 focus:border-purple-900"></textarea>
+            </div>
+
+            <div>
+                <label class="block text-sm font-medium text-gray-700">Instructions (séparées par une virgule)</label>
+                <textarea name="instructions" required
+                          class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-purple-900 focus:border-purple-900"></textarea>
+            </div>
+
+            <div>
+                <label class="block text-sm font-medium text-gray-700">URL de la photo</label>
+                <input type="url" name="image_url" required
+                       class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-purple-900 focus:border-purple-900">
+            </div>
+
+            <div class="flex justify-end space-x-4">
+                <button type="button" onclick="document.getElementById('addRecipeModal').classList.add('hidden')"
+                        class="rounded-lg px-6 py-2 border border-gray-300 text-black hover:bg-gray-50">
+                    Annuler
+                </button>
+                <button type="submit" class="rounded-lg bg-black text-white px-4 py-2 hover:bg-purple-900">
+                    Ajouter
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Success Popup -->
+@if(session('success'))
+<div id="successPopupRecette" class="fixed inset-0 flex items-center justify-center z-50">
+    <div class="bg-gradient-to-r from-black to-purple-800 text-white px-8 py-6 rounded-lg shadow-2xl">
+        <h3 class="text-2xl font-bold">Recette Ajoutée! 🎉</h3>
+        <p class="mt-2 text-lg">{{ session('success') }}</p>
+    </div>
+</div>
+
+<script>
+    setTimeout(() => {
+        document.getElementById('successPopupRecette').classList.add('hidden');
+    }, 3000);
+</script>
+@endif
+
 
 <!-- Success Popup -->
 <div id="successPopup" class="hidden fixed inset-0 flex items-center justify-center z-50">
