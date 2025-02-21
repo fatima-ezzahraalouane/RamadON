@@ -1,9 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
-<main class="min-h-screen flex justify-center items-center bg-gradient-to-r from-purple-100 to-purple-900">
+<main class="min-h-screen flex flex-col justify-center items-center bg-gradient-to-r from-purple-100 to-purple-900">
     <section id="hero" class="relative text-white w-full">
-        <div class="max-w-7xl mx-auto px-4 flex items-center">
+        <div class="max-w-7xl mx-auto px-4 flex items-center justify-between">
             <div class="w-1/2 pr-12">
                 <h1 class="text-5xl font-bold mb-6 text-black">RamadON 2025</h1>
                 <p class="text-xl mb-8 text-black font-medium">Partagez vos expériences, recettes et moments spirituels avec notre communauté pendant ce mois sacré.</p>
@@ -11,50 +11,54 @@
                     Partager votre expérience
                 </button>
             </div>
-            <div class="w-1/2">
-                <img src="https://public.readdy.ai/ai/img_res/3a6f4c6d90629a3cdf83a52a30378814.jpg" class="rounded-lg shadow-xl" alt="Ramadan illustration">
+            <div class="w-1/2 flex justify-center items-center mt-10">
+                <img src="https://public.readdy.ai/ai/img_res/3a6f4c6d90629a3cdf83a52a30378814.jpg" class="rounded-lg shadow-xl max-w-full h-auto" alt="Ramadan illustration">
+            </div>
+        </div>
+    </section>
+
+    <!-- Dua Section -->
+    <section id="dua" class="py-16 bg-gradient-to-b from-gray-100 to-white w-full mt-10">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <h2 class="text-4xl font-bold text-gray-900 mb-8">📖 Supplications (Dua) du Ramadan</h2>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Morning Dua -->
+                <div class="p-6 bg-white rounded-lg shadow-md border">
+                    <h3 class="text-xl font-semibold text-purple-900 mb-4">🌅 Matin</h3>
+                    <p class="text-lg text-gray-700 leading-relaxed">
+                        اللهم إني أسألك خير هذا اليوم فتحه، ونصره، ونوره، وبركته، وهداه.
+                    </p>
+                    <p class="text-sm text-gray-600 mt-2 italic">
+                        "O Allah, I ask You for the good of this day: its victory, its light, its blessings, and its guidance."
+                    </p>
+                </div>
+
+                <!-- Ramadan Special Dua -->
+                <div class="p-6 bg-white rounded-lg shadow-md border">
+                    <h3 class="text-xl font-semibold text-purple-900 mb-4">🌙 Ramadan Spécial</h3>
+                    <p class="text-lg text-gray-700 leading-relaxed">
+                        اللهم تقبل منا صيامنا وقيامنا وتجاوز عن سيئاتنا وبلغنا ليلة القدر.
+                    </p>
+                    <p class="text-sm text-gray-600 mt-2 italic">
+                        "O Allah, accept our fasting and prayers, forgive our sins, and grant us the blessings of Laylatul Qadr."
+                    </p>
+                </div>
+
+                <!-- Night Dua -->
+                <div class="p-6 bg-white rounded-lg shadow-md border">
+                    <h3 class="text-xl font-semibold text-purple-900 mb-4">🌌 Nuit</h3>
+                    <p class="text-lg text-gray-700 leading-relaxed">
+                        اللهم إني أسألك العفو والعافية في الدنيا والآخرة.
+                    </p>
+                    <p class="text-sm text-gray-600 mt-2 italic">
+                        "O Allah, I ask You for forgiveness and well-being in this life and the Hereafter."
+                    </p>
+                </div>
             </div>
         </div>
     </section>
 </main>
-
-<!-- <section class="bg-white py-8 border-b">
-    <div class="max-w-7xl mx-auto px-4">
-        <div class="flex items-center justify-between">
-            <div class="flex items-center space-x-8">
-                <div class="text-center">
-                    <div id="days-remaining" class="text-3xl font-bold text-primary mb-1"></div>
-                    <div class="text-sm text-gray-600">Jours restants</div>
-                </div>
-                <div class="text-center">
-                    <div id="iftar-countdown" class="text-3xl font-bold text-primary mb-1"></div>
-                    <div class="text-sm text-gray-600">Jusqu'au Iftar</div>
-                </div>
-                <div class="text-center">
-                    <div id="suhoor-countdown" class="text-3xl font-bold text-primary mb-1"></div>
-                    <div class="text-sm text-gray-600">Jusqu'au Suhoor</div>
-                </div>
-            </div>
-            <div class="flex items-center space-x-6">
-                <div class="text-center">
-                    <div class="text-3xl font-bold text-gray-900 mb-1">Safi</div>
-                    <div id="current-date" class="text-sm text-gray-600"></div>
-                </div>
-                <div class="flex items-center space-x-4 text-gray-600">
-                    <div class="flex items-center">
-                        <i class="ri-sun-line mr-2 text-yellow-500"></i>
-                        <span id="sunrise-time"></span>
-                    </div>
-                    <div class="flex items-center">
-                        <i class="ri-moon-line mr-2 text-primary"></i>
-                        <span id="sunset-time"></span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section> -->
-
 
 <!-- Modal Form -->
 <div id="experienceFormModal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center">
@@ -104,10 +108,9 @@
 </div>
 
 <script>
-   document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('DOMContentLoaded', function() {
         const successPopup = document.getElementById('successPopup');
 
-        // Ensure popup is shown when session is set
         if (successPopup) {
             successPopup.classList.remove('hidden');
             setTimeout(() => {
@@ -117,14 +120,6 @@
     });
 </script>
 @endif
-
-<!-- Success Popup -->
-<!-- <div id="successPopup" class="hidden fixed inset-0 flex items-center justify-center z-50">
-    <div class="bg-gradient-to-r from-black to-purple-800 text-white px-8 py-6 rounded-lg shadow-2xl animate-fadeIn transform scale-95">
-        <h3 class="text-2xl font-bold">Expérience Publiée! 🎉🕌🌙</h3>
-        <p class="mt-2 text-lg">Votre expérience a été ajoutée avec succès.</p>
-    </div>
-</div> -->
 
 <script>
     function showExperienceForm() {
@@ -136,8 +131,6 @@
         document.getElementById("experienceFormModal").classList.add("hidden");
         document.body.style.overflow = "auto";
     }
-
-  
 </script>
 
 <!-- Tailwind Animations -->
